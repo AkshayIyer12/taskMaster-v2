@@ -1,0 +1,12 @@
+let express = require('express')
+let app = express()
+let bodyParser = require('body-parser')
+app.use(express.static('public'))
+app.get('/', (req, res) => res.send('index.html'))
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.post('/', (req, res) => {
+  res.send('POST request to the homepage')
+  console.log(req.body)
+})
+app.listen(3000)
