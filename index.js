@@ -5,7 +5,12 @@ const path = require('path')
 
 const route = require('./routes')
 const helper = require('./helper')
-const db = require('./data')
+//const db = require('./data')
+
+const redis = require('redis')
+const client = redis.createClient()
+
+client.on('error', (err) => console.log('Error '+err))
 
 let counter = 0
 
@@ -25,10 +30,13 @@ app.post(route.home, (req, res) => {
 app.get(route.createTask, (req, res) => res.sendFile(path.join(__dirname, '/public/createTask.html')))
 
 app.post(route.createTask, (req, res) => {
-  if (!helper.sanitize(req.body)) {
+  if (helper.sanitize(req.body) !== false) {
     // empty fields
+    ++counter
+    client.hmset("task"+counter,req.body, redis.print)
+    client.hgetall("task"+counter, (err, obj) => console.log(Object.entries(obj)))
   } else {
-    db.data[++counter] = req.body
+    throw new Error('You have left a field empty')
   }
   res.send('creating task!')
 })
