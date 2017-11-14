@@ -1,5 +1,9 @@
 const routes = {
+	home: '/',
 	createTask: '/createTask',
-	home: '/'
+	updateTask: '/updateTask',
+	deleteTask: '/deleteTask',
+	displayTasks: '/displayTasks'
 }
+
 module.exports = routes
