@@ -9,4 +9,9 @@ app.post('/', (req, res) => {
   res.send('POST request to the homepage')
   console.log(req.body)
 })
-app.listen(3000)
+app.get('/task', (req, res) => res.send('task.html'))
+app.post('/task', (req, res) => {
+	res.send('POST Successful')
+	console.log(req.body)
+})
+app.listen(4000)
