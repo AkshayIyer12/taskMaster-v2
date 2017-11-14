@@ -5,12 +5,11 @@ const path = require('path')
 
 const route = require('./routes')
 const helper = require('./helper')
-//const db = require('./data')
 
 const redis = require('redis')
 const client = redis.createClient()
 
-client.on('error', (err) => console.log('Error '+err))
+client.on('error', (err) => console.log('Error ' + err))
 
 let counter = 0
 
@@ -26,15 +25,17 @@ app.post(route.home, (req, res) => {
   console.log(req.body)
 })
 
-
 app.get(route.createTask, (req, res) => res.sendFile(path.join(__dirname, '/public/createTask.html')))
 
 app.post(route.createTask, (req, res) => {
   if (helper.sanitize(req.body) !== false) {
     // empty fields
     ++counter
-    client.hmset("task"+counter,req.body, redis.print)
-    client.hgetall("task"+counter, (err, obj) => console.log(Object.entries(obj)))
+    client.hmset('task' + counter, req.body, redis.print)
+    client.hgetall('task' + counter, (err, obj) => {
+      if (err) throw new Error('Fetching task failed!')
+      console.log(obj)
+    })
   } else {
     throw new Error('You have left a field empty')
   }
@@ -43,11 +44,18 @@ app.post(route.createTask, (req, res) => {
 
 // app.get(route.updateTask, (req,res) => res.sendFile(path.join(__dirname, '/public/updateTask.html')))
 app.get(route.displayTasks, (req, res) => {
-  let str = '';
-  for (let i in Object.keys(db.data)) {
-    str += '<li>' + db.data[i].taskName + ' ' + db.data[i].assignTo + '</li>\n';
-  }
-
+  let str = ''
+  client.keys('*', (err, key) => {
+    if (err) throw new Error('Empty Data!')
+    for (let i = 0; i < key.length; i++) {
+      client.hgetall(key[i], (err, value) => {
+        if (err) throw new Error(`Key doesn't exist!`)
+        str += '<li>' + value.assignTo + ' ' + value.desc + ' ' +
+      value.taskName + ' ' + value.dueDate + '</li>\n'
+        console.log(str)
+      })
+    }
+  })
   res.send(`
   <html>
   <body>
@@ -57,6 +65,9 @@ app.get(route.displayTasks, (req, res) => {
   </body>
   </html>`)
 })
+//   for (let i in Object.keys()) {
+//     str += '<li>' + db.data[i].taskName + ' ' + db.data[i].assignTo + '</li>\n';
+//   }
 
 // app.post(route.updateTask, (req, res) => {
 
