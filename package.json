@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/anirudhbs/taskMaster-v2#readme",
   "dependencies": {
-    "express": "^4.16.2"
+    "express": "^4.16.2",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "nodemon": "^1.12.1"
