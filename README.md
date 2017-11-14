@@ -1,10 +1,10 @@
 # TaskMaster-v2
-
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 A simple application to manage tasks.
 
 ## How to run the project?
-
-```npm start```
+To install the dependencies run: ```npm install```
+then run: ```npm start```
 
 ## How to test the code?
 
