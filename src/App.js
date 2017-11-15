@@ -7,7 +7,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      posts: []
+      names: []
     }
   }
   renderString() {
@@ -15,22 +15,25 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://www.reddit.com/r/globalOffensive.json`)
+    axios.get(`http://localhost:3000/tasks`)
       .then(res => {
-        const posts = res.data.data.children.map(obj => obj.data)
-        this.setState({ posts })
+        if(res.status !== 'success'){
+          // handle Error
+        }
+
+        const names = res.data.data.map(currentTask => currentTask)
+        this.setState({ names })
       })
   }
 
+
   render() {
     return (
-      <div>
-          <ul>
-          {
-            this.state.posts.map(post =>
-            <li key={post.id}>{post.title}</li>
-          )
-          }
+      <div id='allTasks'>
+        <ul>
+        {this.state.names.map(current =>
+        <li key = {current.taskID}>{current.taskName}</li>
+        )}
         </ul>
       </div>
     )
