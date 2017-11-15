@@ -31,7 +31,7 @@ app.get(route.displayTasks, (req, res) => {
 
 app.get(route.task, (req, res) => {
   db.getTaskById(req.params.taskId, (err, value) => {
-    if (err) res.json({'status': 'error', 'message': err})
+    if (err) res.json({'status': 'error', 'message': err.message})
     else res.json({
       'status': 'success',
       'data': value})
