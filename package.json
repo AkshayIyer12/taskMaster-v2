@@ -4,7 +4,7 @@
   "description": "taskMaster v2",
   "main": "index.js",
   "scripts": {
-    "test": "standard && node index.js",
+    "test": "standard --fix && node index.js",
     "start": "nodemon index.js",
     "start-react": "react-scripts start",
     "build-react": "react-scripts build",
