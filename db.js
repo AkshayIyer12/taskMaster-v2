@@ -34,7 +34,18 @@ const getTaskById = (taskId, cb) => {
   })
 }
 
+const deleteTaskById = (taskId, cb) => {
+  client.del(taskId, (err, value) => {
+    if (value === 0 || value === undefined) {
+      cb(err || new Error('Cannot find the id'))
+    } else {
+      cb(null)
+    }
+  })
+}
+
 module.exports = {
-	getAllTasks,
-  getTaskById
+  getAllTasks,
+  getTaskById,
+  deleteTaskById
 }
