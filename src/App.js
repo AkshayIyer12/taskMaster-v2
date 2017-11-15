@@ -3,21 +3,21 @@ import './App.css'
 import axios from 'axios'
 
 class App extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
       names: []
     }
   }
-  renderString() {
+  renderString () {
     return ('hello world')
   }
 
-  componentDidMount() {
+  componentDidMount () {
     axios.get(`http://localhost:3000/tasks`)
       .then(res => {
-        if(res.status !== 'success'){
+        if (res.status !== 'success') {
           // handle Error
         }
 
@@ -26,13 +26,12 @@ class App extends Component {
       })
   }
 
-
-  render() {
+  render () {
     return (
       <div id='allTasks'>
         <ul>
-        {this.state.names.map(current =>
-        <li key = {current.taskID}>{current.taskName}</li>
+          {this.state.names.map(current =>
+            <li key={current.taskID}>{current.taskName}</li>
         )}
         </ul>
       </div>
