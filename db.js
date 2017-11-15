@@ -45,21 +45,35 @@ const deleteTaskById = (taskId, cb) => {
   })
 }
 
-const addToDB = (task, cb) => {
+const addTaskToDB = (task, cb) => {
   let uniqueId = uuid()
   client.exists(uniqueId, (err, value) => {
     if (err === null && value === 1) {
       cb(err || new Error('Id already present'))
     } else {
+      task['taskId'] = uniqueId
       client.set(uniqueId, JSON.stringify(task))
       cb(null, value)
     }
   })
-  // client.set(uniqueId, JSON.stringify(task), redis.print)
 }
+
+const updateTaskInDB = (taskId, task, cb) => {
+  client.exists(taskId, (err, value) => {
+    if (err === null && value === 0) {
+      cb(err || new Error(`Id doesn't exists`))
+    } else {
+      task['taskId'] = taskId
+      client.set(taskId, JSON.stringify(task))
+      cb(null, value)
+    }
+  })
+}
+
 module.exports = {
   getAllTasks,
   getTaskById,
   deleteTaskById,
-  addToDB
+  addTaskToDB,
+  updateTaskInDB
 }
