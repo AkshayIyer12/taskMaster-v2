@@ -77,11 +77,15 @@ app.post(route.displayTasks, (req, res) => {
   if (!helper.sanitize(req.body)) {
     // empty fields
   } else {
-    db.data[++counter] = req.body
+    // db.data[++counter] = req.body
   }
   res.send('creating task!')
 })
 
 app.listen(3000, () => {
   console.log('running on 3000')
+})
+
+app.get(route.deleteTask, (req, res) => {
+  // client.del(req.body, (err, obj) => console.log(obj))
 })
