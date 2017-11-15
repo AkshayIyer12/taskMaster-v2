@@ -11,8 +11,8 @@ const getAllTasks = (cb) => {
     } else  {
         for (let i = 0; i < key.length; i++) {
           let p = new Promise((resolve,reject) =>{
-            client.hgetall(key[i], (err, value) => {
-              resolve(value)
+            client.get(key[i], (err, value) => {
+              resolve(JSON.parse(value))
             })
           })
         pall.push(p)
@@ -24,6 +24,17 @@ const getAllTasks = (cb) => {
   })
 }
 
+const getTaskById = (taskId, cb) => {
+  client.get(taskId, (err, value) => {
+    if (err) {
+      cb(err)
+    } else {
+      cb(null, JSON.parse(value))
+    }
+  })
+}
+
 module.exports = {
-	getAllTasks
+	getAllTasks,
+  getTaskById
 }
