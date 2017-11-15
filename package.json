@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "standard --fix && node index.js",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "start-react": "react-scripts start",
+    "build-react": "react-scripts build",
+    "test-react": "react-scripts test --env=jsdom",
+    "eject-react": "react-scripts eject"
   },
   "repository": {
     "type": "git",
@@ -22,7 +26,10 @@
   "homepage": "https://github.com/anirudhbs/taskMaster-v2#readme",
   "dependencies": {
     "express": "^4.16.2",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-scripts": "1.0.17"
   },
   "devDependencies": {
     "nodemon": "^1.12.1",
