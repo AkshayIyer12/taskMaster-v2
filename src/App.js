@@ -7,7 +7,7 @@ class App extends Component {
     super(props)
 
     this.state = {
-      posts: []
+      names: []
     }
   }
   renderString() {
@@ -21,23 +21,19 @@ class App extends Component {
           // handle Error
         }
 
-        console.log(res.data)
-        const taskNames = res.data.map(current => current.taskName)
-        this.setState({ taskNames })
-        // const posts = res.data.data.children.map(obj => obj.data)
-        // this.setState({ posts })
+        const names = res.data.data.map(currentTask => currentTask)
+        this.setState({ names })
       })
   }
 
+
   render() {
     return (
-      <div>
+      <div id='allTasks'>
         <ul>
-        {
-        this.state.posts.map(post =>
-        <li>{post}</li>
-        )
-        }
+        {this.state.names.map(current =>
+        <li key = {current.taskID}>{current.taskName}</li>
+        )}
         </ul>
       </div>
     )
@@ -45,5 +41,3 @@ class App extends Component {
 }
 
 export default App
-
-
