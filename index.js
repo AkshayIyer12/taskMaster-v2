@@ -3,7 +3,6 @@ const app = express()
 const bodyParser = require('body-parser')
 const route = require('./routes')
 const db = require('./db')
-
 const redis = require('redis')
 const client = redis.createClient()
 
@@ -17,16 +16,25 @@ app.use(bodyParser.urlencoded({
 
 app.get(route.displayTasks, (req, res) => {
   let tasks = {
-  'status': 'success',
-  'data': {}
+    'status': 'success',
+    'data': {}
   }
-  db.getAllTasks(function(err, data){
+  db.getAllTasks(function (err, data) {
     if (err) {
       console.log(err)
     } else {
       tasks.data = data
       res.json(tasks)
     }
+  })
+})
+
+app.get(route.task, (req, res) => {
+  db.getTaskById(req.params.taskId, (err, value) => {
+    if (err) res.json({'status': 'error', 'message': err})
+    else res.json({
+      'status': 'success',
+      'data': value})
   })
 })
 
