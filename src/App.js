@@ -15,22 +15,29 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get(`http://www.reddit.com/r/globalOffensive.json`)
+    axios.get(`http://localhost:3000/tasks`)
       .then(res => {
-        const posts = res.data.data.children.map(obj => obj.data)
-        this.setState({ posts })
+        if(res.status !== 'success'){
+          // handle Error
+        }
+
+        console.log(res.data)
+        const taskNames = res.data.map(current => current.taskName)
+        this.setState({ taskNames })
+        // const posts = res.data.data.children.map(obj => obj.data)
+        // this.setState({ posts })
       })
   }
 
   render() {
     return (
       <div>
-          <ul>
-          {
-            this.state.posts.map(post =>
-            <li key={post.id}>{post.title}</li>
-          )
-          }
+        <ul>
+        {
+        this.state.posts.map(post =>
+        <li>{post}</li>
+        )
+        }
         </ul>
       </div>
     )
@@ -38,3 +45,5 @@ class App extends Component {
 }
 
 export default App
+
+
