@@ -65,6 +65,17 @@ app.get(route.displayTasks, (req, res) => {
   </body>
   </html>`)
 })
+
+// function renderHTML(str){
+//   res.send(`
+//   <html>
+//   <body>
+//     <ul>
+//       ${str}
+//     </ul>
+//   </body>
+//   </html>`)
+// }
 //   for (let i in Object.keys()) {
 //     str += '<li>' + db.data[i].taskName + ' ' + db.data[i].assignTo + '</li>\n';
 //   }
