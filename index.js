@@ -39,6 +39,15 @@ app.get(route.task, (req, res) => {
   })
 })
 
+app.delete(route.task, (req, res) => {
+  db.deleteTaskById(req.params.taskId, (err, value) => {
+    if (err) res.json({'status': 'error', 'message': err.message})
+    else res.json({
+      'status': 'success',
+      'data': value
+    })
+  })
+})
 app.listen(3000, () => {
   console.log('running on 3000')
 })
