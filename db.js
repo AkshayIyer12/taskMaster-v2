@@ -26,8 +26,8 @@ const getAllTasks = (cb) => {
 
 const getTaskById = (taskId, cb) => {
   client.get(taskId, (err, value) => {
-    if (err) {
-      cb(err)
+    if (err || value === null) {
+      cb(err || new Error('Cannot find the id'))
     } else {
       cb(null, JSON.parse(value))
     }
