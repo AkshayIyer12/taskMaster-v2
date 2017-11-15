@@ -1,4 +1,5 @@
 const redis = require('redis')
+const uuid = require('uuid-v4')
 
 const client = redis.createClient()
 client.on('error', (err) => console.log('Error ' + err))
@@ -8,18 +9,18 @@ const getAllTasks = (cb) => {
     let pall = []
     if (err) {
       cb(err)
-    } else  {
-        for (let i = 0; i < key.length; i++) {
-          let p = new Promise((resolve,reject) =>{
-            client.get(key[i], (err, value) => {
-              resolve(JSON.parse(value))
-            })
+    } else {
+      for (let i = 0; i < key.length; i++) {
+        let p = new Promise((resolve, reject) => {
+          client.get(key[i], (err, value) => {
+            resolve(JSON.parse(value))
           })
+        })
         pall.push(p)
-        }
+      }
     }
-    Promise.all(pall).then(function(value){
-        cb(null, value)
+    Promise.all(pall).then(function (value) {
+      cb(null, value)
     })
   })
 }
@@ -44,8 +45,21 @@ const deleteTaskById = (taskId, cb) => {
   })
 }
 
+const addToDB = (task, cb) => {
+  let uniqueId = uuid()
+  client.exists(uniqueId, (err, value) => {
+    if (err === null && value === 1) {
+      cb(err || new Error('Id already present'))
+    } else {
+      client.set(uniqueId, JSON.stringify(task))
+      cb(null, value)
+    }
+  })
+  // client.set(uniqueId, JSON.stringify(task), redis.print)
+}
 module.exports = {
   getAllTasks,
   getTaskById,
-  deleteTaskById
+  deleteTaskById,
+  addToDB
 }
