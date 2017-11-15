@@ -1,7 +1,8 @@
 const routes = {
   displayTasks: '/tasks',
   task: '/task/:taskId',
-  createTask: '/task'
+  createTask: '/task',
+  updateTask: '/task/:taskId'
 }
 
 module.exports = routes
