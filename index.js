@@ -59,7 +59,20 @@
  })
 
  app.post(route.createTask, upload.array(), (req, res) => {
-   db.addToDB(req.body, (err, value) => {
+   db.addTaskToDB(req.body, (err, value) => {
+     if (err) {
+       res.json({'status': 'error', 'message': err.message})
+     } else {
+       res.json({
+         'status': 'success',
+         'data': value
+       })
+     }
+   })
+ })
+
+ app.post(route.updateTask, upload.array(), (req, res) => {
+   db.updateTaskInDB(req.params.taskId, req.body, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
      } else {
