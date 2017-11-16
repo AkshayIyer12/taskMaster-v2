@@ -6,9 +6,10 @@ let db = {}
 client.connect('mongodb://localhost:27017/taskMaster-v2', (err, database) => {
   if (err) {
     console.log('Error ' + err)
-  }
+  } else {
   console.log('Server has started successfully')
   db = database
+  }
 })
 
 const getAllTasks = (cb) => {
@@ -117,6 +118,16 @@ const deleteUserById = (userId, cb) => {
   }
 }
 
+const addUser = (user, cb) => {
+  db.collection('collector').insertOne(user, (err, val) => {
+    if (err !== null || val.result['n'] === 0) {
+      cb(err || new Error('Adding task failed'))
+    } else {
+      cb(null, val.insertedId)
+    }
+  })
+}
+
 module.exports = {
   getAllTasks,
   getTaskById,
@@ -125,5 +136,6 @@ module.exports = {
   updateTask,
   getAllUsers,
   getUserById,
-  deleteUserById
+  deleteUserById,
+  addUser
 }
