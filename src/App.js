@@ -5,9 +5,14 @@ import axios from 'axios'
 class RenderTask extends Component {
   render () {
     return (
-      <li>
-      {this.props.value.taskName} - {this.props.value.assignTo} - {this.props.value.dueDate} - {this.props.value.desc}
-      </li>
+      <div>
+        <li className='task-list'>
+          <span className='field task-name'>{this.props.currentTask.taskName}</span>
+          <span className='field assign-to'>{this.props.currentTask.assignTo}</span>
+          <span className='field due-date'>{this.props.currentTask.dueDate}</span>
+          <span className='field desc'>{this.props.currentTask.desc}</span>
+        </li>
+      </div>
     )
   }
 }
@@ -23,28 +28,30 @@ class DisplayTasks extends Component {
 
   componentDidMount () {
     axios.get(`http://localhost:3000/tasks`)
-      .then(res => {
-        if (res.data.status !== 'success') {
-          // handle Error
-        }
-        const taskList = res.data.data.map(currentTask => {
-          return currentTask
-        })
-
-        this.setState({
-          taskList
-        })
+    .then(res => {
+      if (res.data.status !== 'success') {
+        // handle Error
+      }
+      const taskList = res.data.data.map(currentTask => {
+        return currentTask
       })
-    }
+
+      this.setState({
+        taskList
+      })
+    })
+  }
 
   render () {
     return (
       <div id='allTasks'>
         <h2>All tasks</h2>
         <ul>
-        {this.state.taskList.map(current =>
-          <RenderTask value={current} />
-        )}
+        {
+          this.state.taskList.map(current =>
+            <RenderTask currentTask={current} />
+          )
+        }
         </ul>
       </div>
     )
