@@ -4,7 +4,8 @@ const routes = {
   createTask: '/task',
   updateTask: '/task/:taskId',
   displayUsers: '/users',
-  user: '/user/:userId'
+  user: '/user/:userId',
+  createUser: '/user'
 }
 
 module.exports = routes
