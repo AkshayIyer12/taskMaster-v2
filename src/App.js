@@ -54,57 +54,42 @@ class DisplayTasks extends Component {
 }
 
 class CreateTask extends Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
+    this.state = {
+      taskName: '',
+      assignTo: '',
+      dueDate: '',
+      desc: ''
+    }
+  }
 
-this.state = {
-			taskName: '',
-			assignTo: '',
-			dueDate: '',
-			desc:''
-		}
+  onChange = (e) => {
+    const state = this.state
+    state[e.target.name] = e.target.value
+    this.setState(state)
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault()
+    const { taskName, assignTo, dueDate, desc } = this.state
+    console.log(taskName, assignTo, dueDate, desc)
+    // axios.post('/', { taskName, assignTo, dueDate, desc })
+    // .then((result) => {
+    //   // handle Result
+    // });
   }
 
   render() {
+    const { taskName, assignTo, dueDate, desc } = this.state
     return (
-      <div id='createTask'>
-        <h2>createTask</h2>
-            <div>
-              <input 
-              type="text"
-              name="taskName"
-              placeholder="Name"
-              value={ this.state.taskName }
-              onChange={ this.handleChange } 
-              />
-              
-              <input
-              type="text"
-              name="assignTo"
-              placeholder="Assign To"
-              value={ this.state.assignTo }
-              onChange={ this.handleChange }
-              />
-
-              <input
-              type="text"
-              name="dueDate"
-              placeholder="Due Date"
-              value={ this.state.dueDate }
-              onChange={ this.handleChange }
-              />
-
-              <input
-              type="text"
-              name="desc"
-              placeholder="Description"
-              value={ this.state.desc }
-              onChange={ this.handleChange }
-              />
-            
-              <button value="Send" onClick={ this.addTask }>Add</button>
-        </div>
-      </div>
+      <form onSubmit={this.onSubmit}>
+        <input type="text" name="taskName" value={taskName} onChange={this.onChange} />
+        <input type="text" name="assignTo" value={assignTo} onChange={this.onChange} />
+        <input type="text" name="dueDate" value={dueDate} onChange={this.onChange} />
+        <input type="text" name="desc" value={desc} onChange={this.onChange} />
+        <button type="submit">Submit</button>
+      </form>
     )
   }
 }
@@ -114,6 +99,7 @@ class App extends Component {
     return (
     <div>
       <DisplayTasks />
+      <CreateTask />
     </div>
     )
   }
