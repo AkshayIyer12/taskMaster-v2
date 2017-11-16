@@ -78,10 +78,22 @@ const updateTask = (taskId, task, cb) => {
   }
 }
 
+const getAllUsers = (cb) => {
+  db.collection('collector').find({type: 'user'}).toArray((err, value) => {
+    if (err) {
+      cb(err)
+    } else {
+      cb(null, value)
+    }
+   })
+}
+
+
 module.exports = {
   getAllTasks,
   getTaskById,
   deleteTaskById,
   addTask,
-  updateTask
+  updateTask,
+  getAllUsers
 }
