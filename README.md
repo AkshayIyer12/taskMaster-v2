@@ -4,12 +4,10 @@
 * A simple application to manage tasks.
 
 ## How to run the project?
-1. Install Redis by downloading it from [Redis](https://redis.io/download)
-2. Go to your terminal and run: ```redis-server```
-3. Open another tab in your terminal and run ```redis-cli```
-4. Type ping you should get PONG back if the server is up and running. 
-2. To install the dependencies run: ```npm install```
-3. To run the project run: ```npm start```
+1. Install MongoDB by downloading it from [Mongo](https://www.mongodb.com/download-center)
+2. Go to your terminal and run: ```mongo```
+3. To install the dependencies run: ```npm install```
+4. To run the project run: ```npm start```
 
 ## How to test the code?
 
@@ -18,22 +16,20 @@
 ## What technologies are used?
 * Express.js
 * Node.js
-* Redis
+* MongoDB
 * React
 
 ## What modules are used?
-* Express
-* Body-parser
-* Multer
-* Path
-* Redis
-* Cors
-* uuid-v4
+* express
+* body-parser
+* path
+* cors
 * React
 * React-dom
 * React Scripts
-* Nodemon
-* standardJS
+* nodemon
+* standardjs
+* mongodb
 
 ### How to file an issue, if you feel something is wrong ?
 * Go to the [issues](https://github.com/anirudhbs/taskMaster-v2/issues) section of this project.
