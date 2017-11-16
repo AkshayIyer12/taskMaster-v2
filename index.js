@@ -6,6 +6,9 @@
  const db = require('./db')
  app.use(cors())
  app.use(bodyParser.json())
+ app.use(bodyParser.urlencoded({
+   extended: false
+ }))
 
  app.get(route.displayTasks, (req, res) => {
    let tasks = {
