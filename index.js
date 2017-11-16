@@ -131,6 +131,26 @@ app.delete(route.user, (req, res) => {
    })
  })  
 
+app.post(route.createUser, (req, res) => {
+   if (Object.keys(req.body).length !== 0) {
+     db.addUser(req.body, (err, value) => {
+       if (err) {
+         res.json({'status': 'error', 'message': err.message})
+       } else {
+         res.json({
+           'status': 'success',
+           'data': value
+         })
+       }
+     })
+   } else {
+     res.json({
+       'status': 'error',
+       'message': 'Empty body'
+     })
+   }
+ })
+
  app.listen(3000, () => {
    console.log('running on 3000')
  })
