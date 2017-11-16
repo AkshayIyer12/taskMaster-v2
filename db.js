@@ -1,76 +1,81 @@
-const redis = require('redis')
-const uuid = require('uuid-v4')
+const mongo = require('mongodb')
+const client = mongo.MongoClient
+const ObjectId = mongo.ObjectId
+let db = {}
 
-const client = redis.createClient()
-client.on('error', (err) => console.log('Error ' + err))
+client.connect('mongodb://localhost:27017/taskMaster-v2', (err, database) => {
+  if (err) {
+    console.log('Error ' + err)
+  }
+  console.log('Server has started successfully')
+  db = database
+})
 
 const getAllTasks = (cb) => {
-  client.keys('*', (err, key) => {
-    let pall = []
+  db.collection('collector').find({type: 'task'}).toArray((err, value) => {
     if (err) {
       cb(err)
     } else {
-      for (let i = 0; i < key.length; i++) {
-        let p = new Promise((resolve, reject) => {
-          client.get(key[i], (err, value) => {
-            resolve(JSON.parse(value))
-          })
-        })
-        pall.push(p)
-      }
-    }
-    Promise.all(pall).then(function (value) {
       cb(null, value)
-    })
+    }
   })
 }
 
 const getTaskById = (taskId, cb) => {
-  client.get(taskId, (err, value) => {
-    if (err || value === null) {
-      cb(err || new Error('Cannot find the id'))
-    } else {
-      cb(null, JSON.parse(value))
-    }
-  })
+  if (ObjectId.isValid(taskId)) {
+    let objID = new ObjectId(taskId)
+    db.collection('collector').find({_id: objID}).toArray((err, value) => {
+      if (err || value === null) {
+        cb(err || new Error('Cannot find the id'))
+      } else {
+        cb(null, JSON.parse(JSON.stringify(value[0])))
+      }
+    })
+  } else {
+    cb(new Error('Task Id is not valid'))
+  }
 }
 
 const deleteTaskById = (taskId, cb) => {
-  client.del(taskId, (err, value) => {
-    if (value === 0 || value === undefined) {
-      cb(err || new Error('Cannot find the id'))
+  if (ObjectId.isValid(taskId)) {
+    let objID = new ObjectId(taskId)
+    db.collection('collector').deleteOne({_id: objID}, (err, value) => {
+      console.log(err, value)
+      if (value.result['n'] === 0) {
+        cb(err || new Error('Cannot find the id'))
+      } else {
+        cb(null)
+      }
+    })
+  } else {
+    cb(new Error('Task Id is not valid'))
+  }
+}
+
+const addTask = (task, cb) => {
+  db.collection('collector').insertOne(task, (err, val) => {
+    if (err) {
+      cb(err || new Error('Adding task failed'))
     } else {
-      cb(null)
+      cb(null, val.insertedId)
     }
   })
 }
 
-const addTask = (task, cb) => {
-  let uniqueId = uuid()
-  task['taskId'] = uniqueId
-  client.set(uniqueId, JSON.stringify(task), (err, val) => {
-    if (err === null && val === 0) {
-      cb(err || new Error('Adding task failed'))
-    } else {
-      cb(null, val)
-    }
-  })
-}
 const updateTask = (taskId, task, cb) => {
-  client.exists(taskId, (err, value) => {
-    if (err === null && value === 0) {
-      cb(err || new Error(`Id doesn't exists`))
-    } else {
-      task['taskId'] = taskId
-      client.set(taskId, JSON.stringify(task), (err, val) => {
-        if (err === null && val === 0) {
-          cb(err || new Error('Updating task failed'))
-        } else {
-          cb(null, val)
-        }
-      })
-    }
-  })
+  if (ObjectId.isValid(taskId)) {
+    let objID = new ObjectId(taskId)
+    db.collection('collector').update({_id: objID}, task, (err, res) => {
+      console.log(err, res)
+      if (res.result['nModified'] === 0) {
+        cb(err || new Error('Cannot update the task'))
+      } else {
+        cb(null, res.result['nModified'])
+      }
+    })
+  } else {
+    cb(new Error('Task Id is not valid'))
+  }
 }
 
 module.exports = {
