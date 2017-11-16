@@ -40,8 +40,7 @@ const deleteTaskById = (taskId, cb) => {
   if (ObjectId.isValid(taskId)) {
     let objID = new ObjectId(taskId)
     db.collection('collector').deleteOne({_id: objID}, (err, value) => {
-      console.log(err, value)
-      if (value.result['n'] === 0) {
+      if (err !== null || value.result['n'] === 0) {
         cb(err || new Error('Cannot find the id'))
       } else {
         cb(null)
@@ -66,8 +65,7 @@ const updateTask = (taskId, task, cb) => {
   if (ObjectId.isValid(taskId)) {
     let objID = new ObjectId(taskId)
     db.collection('collector').update({_id: objID}, task, (err, res) => {
-      console.log(err, res)
-      if (res.result['nModified'] === 0) {
+      if (err !== null || res.result['nModified'] === 0) {
         cb(err || new Error('Cannot update the task'))
       } else {
         cb(null, res.result['nModified'])
@@ -103,6 +101,22 @@ const getUserById = (userId, cb) => {
   }
 }
 
+const deleteUserById = (userId, cb) => {
+  if (ObjectId.isValid(userId)) {
+    let userID = new ObjectId(userId)
+    db.collection('collector').deleteOne({_id: userID}, (err, value) => {
+      console.log(err, value)
+      if (err !== null || value.result['n'] === 0) {
+        cb(err || new Error('Cannot find the user id'))
+      } else {
+        cb(null)
+      }
+    })
+  } else {
+    cb(new Error('Task Id is not valid'))
+  }
+}
+
 module.exports = {
   getAllTasks,
   getTaskById,
@@ -110,5 +124,6 @@ module.exports = {
   addTask,
   updateTask,
   getAllUsers,
-  getUserById
+  getUserById,
+  deleteUserById
 }
