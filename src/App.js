@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from 'react'
+import React, { Component } from 'react'
 import './App.css'
 import axios from 'axios'
 
@@ -8,7 +6,7 @@ class RenderTask extends Component {
   render () {
     return (
       <li>
-      {this.props.value.taskName} - {this.props.value.dueDate} - {this.props.value.assignTo} - {this.props.value.desc}
+      {this.props.value.taskName} - {this.props.value.assignTo} - {this.props.value.dueDate} - {this.props.value.desc}
       </li>
     )
   }
@@ -74,22 +72,29 @@ class CreateTask extends Component {
     e.preventDefault()
     const { taskName, assignTo, dueDate, desc } = this.state
     console.log(taskName, assignTo, dueDate, desc)
-    // axios.post('/', { taskName, assignTo, dueDate, desc })
-    // .then((result) => {
-    //   // handle Result
-    // });
+
+    axios.post('http://localhost:3000/task', { taskName, assignTo, dueDate, desc })
+    .then((res) => {
+      // handle Result
+      if(res.data.status === 'success') {
+        // re-Render allTasks
+      }
+    });
   }
 
   render() {
     const { taskName, assignTo, dueDate, desc } = this.state
     return (
-      <form onSubmit={this.onSubmit}>
-        <input type="text" name="taskName" value={taskName} onChange={this.onChange} />
-        <input type="text" name="assignTo" value={assignTo} onChange={this.onChange} />
-        <input type="text" name="dueDate" value={dueDate} onChange={this.onChange} />
-        <input type="text" name="desc" value={desc} onChange={this.onChange} />
-        <button type="submit">Submit</button>
-      </form>
+      <div>
+        <h2>create task</h2>
+        <form onSubmit={this.onSubmit}>
+          <input type='text' name='taskName' value={taskName} onChange={this.onChange} placeholder='Name'/>
+          <input type='text' name='assignTo' value={assignTo} onChange={this.onChange} placeholder='Assign to'/>
+          <input type='text' name='dueDate' value={dueDate} onChange={this.onChange} placeholder='Due Date'/>
+          <input type='textarea' name='desc' value={desc} onChange={this.onChange} placeholder='Description'/>
+          <button type='submit'>Submit</button>
+        </form>
+      </div>
     )
   }
 }
