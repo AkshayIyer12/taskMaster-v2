@@ -7,8 +7,8 @@ client.connect('mongodb://localhost:27017/taskMaster-v2', (err, database) => {
   if (err) {
     console.log('Error ' + err)
   } else {
-  console.log('Server has started successfully')
-  db = database
+    console.log('Server has started successfully')
+    db = database
   }
 })
 
@@ -84,7 +84,7 @@ const getAllUsers = (cb) => {
     } else {
       cb(null, value)
     }
-   })
+  })
 }
 
 const getUserById = (userId, cb) => {
@@ -114,18 +114,33 @@ const deleteUserById = (userId, cb) => {
       }
     })
   } else {
-    cb(new Error('Task Id is not valid'))
+    cb(new Error('User Id is not valid'))
   }
 }
 
 const addUser = (user, cb) => {
   db.collection('collector').insertOne(user, (err, val) => {
     if (err !== null || val.result['n'] === 0) {
-      cb(err || new Error('Adding task failed'))
+      cb(err || new Error('Adding user failed'))
     } else {
       cb(null, val.insertedId)
     }
   })
+}
+
+const updateUser = (userId, user, cb) => {
+  if (ObjectId.isValid(userId)) {
+    let userID = new ObjectId(userId)
+    db.collection('collector').update({_id: userID}, user, (err, res) => {
+      if (err !== null || res.result['nModified'] === 0) {
+        cb(err || new Error('Cannot update the user details'))
+      } else {
+        cb(null, res.result['nModified'])
+      }
+    })
+  } else {
+    cb(new Error('User Id is not valid'))
+  }
 }
 
 module.exports = {
@@ -137,5 +152,6 @@ module.exports = {
   getAllUsers,
   getUserById,
   deleteUserById,
-  addUser
+  addUser,
+  updateUser
 }
