@@ -38,7 +38,7 @@
    })
  })
 
- app.delete(route.task, (req, res) => {
+ app.delete(route.deleteTask, (req, res) => {
    db.deleteTaskById(req.params.taskId, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
@@ -92,21 +92,21 @@
  })
 
  app.get(route.displayUsers, (req, res) => {
-  let users = {
-    'status': 'success',
+   let users = {
+     'status': 'success',
      'data': {}
-  }
-  db.getAllUsers(function (err, data) {
-    if (err) {
-      res.json({'status': 'error', 'message': err.message})
-    } else {
-      users.data = data
-      res.json(users)
-    }
-  })
+   }
+   db.getAllUsers(function (err, data) {
+     if (err) {
+       res.json({'status': 'error', 'message': err.message})
+     } else {
+       users.data = data
+       res.json(users)
+     }
+   })
  })
 
-  app.get(route.user, (req, res) => {
+ app.get(route.user, (req, res) => {
    db.getUserById(req.params.userId, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
@@ -118,7 +118,7 @@
    })
  })
 
-app.delete(route.user, (req, res) => {
+ app.delete(route.deleteUser, (req, res) => {
    db.deleteUserById(req.params.userId, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
@@ -129,11 +129,31 @@ app.delete(route.user, (req, res) => {
        })
      }
    })
- })  
+ })
 
-app.post(route.createUser, (req, res) => {
+ app.post(route.createUser, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
      db.addUser(req.body, (err, value) => {
+       if (err) {
+         res.json({'status': 'error', 'message': err.message})
+       } else {
+         res.json({
+           'status': 'success',
+           'data': value
+         })
+       }
+     })
+   } else {
+     res.json({
+       'status': 'error',
+       'message': 'Empty body'
+     })
+   }
+ })
+
+ app.put(route.updateUser, (req, res) => {
+   if (Object.keys(req.body).length !== 0) {
+     db.updateTask(req.params.userId, req.body, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
        } else {
