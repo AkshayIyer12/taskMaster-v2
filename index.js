@@ -91,6 +91,22 @@
    }
  })
 
+ app.get(route.displayUsers, (req, res) => {
+  let users = {
+    'status': 'success',
+     'data': {}
+  }
+  db.getAllUsers(function (err, data) {
+    if (err) {
+      console.log(err)
+    } else {
+      users.data = data
+      res.json(users)
+    }
+  })
+ })
+
+
  app.listen(3000, () => {
    console.log('running on 3000')
  })
