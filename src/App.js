@@ -4,61 +4,48 @@ import React, {
 import './App.css'
 import axios from 'axios'
 
-<<<<<<< HEAD
-class App extends Component {
-  constructor (props) {
-=======
+class RenderTask extends Component {
+  render () {
+    return (
+      <li>
+      {this.props.value.taskName} - {this.props.value.dueDate} - {this.props.value.assignTo} - {this.props.value.desc}
+      </li>
+    )
+  }
+}
+
 class DisplayTasks extends Component {
   constructor(props) {
->>>>>>> b3212d5f4ee58151d0927b824026939a788eef54
     super(props)
 
     this.state = {
-      names: []
+      taskList: []
     }
   }
-<<<<<<< HEAD
-  renderString () {
-    return ('hello world')
-  }
-=======
->>>>>>> b3212d5f4ee58151d0927b824026939a788eef54
 
   componentDidMount () {
     axios.get(`http://localhost:3000/tasks`)
       .then(res => {
-<<<<<<< HEAD
-        if (res.status !== 'success') {
-=======
         if (res.data.status !== 'success') {
->>>>>>> b3212d5f4ee58151d0927b824026939a788eef54
           // handle Error
         }
-        const names = res.data.data.map(currentTask => {
+        const taskList = res.data.data.map(currentTask => {
           return currentTask
         })
+
         this.setState({
-          names
+          taskList
         })
       })
-  }
+    }
 
-<<<<<<< HEAD
   render () {
-=======
-  render() {
->>>>>>> b3212d5f4ee58151d0927b824026939a788eef54
     return (
       <div id='allTasks'>
         <h2>All tasks</h2>
         <ul>
-<<<<<<< HEAD
-          {this.state.names.map(current =>
-            <li key={current.taskID}>{current.taskName}</li>
-=======
-        {this.state.names.map(current =>
-          <li>{current.taskName} - {current.assignTo} - {current.dueDate} - {current.desc}</li> // key
->>>>>>> b3212d5f4ee58151d0927b824026939a788eef54
+        {this.state.taskList.map(current =>
+          <RenderTask value={current} />
         )}
         </ul>
       </div>
@@ -81,7 +68,7 @@ this.state = {
   render() {
     return (
       <div id='createTask'>
-        <h1>createTask</h1>
+        <h2>createTask</h2>
             <div>
               <input 
               type="text"
@@ -127,7 +114,6 @@ class App extends Component {
     return (
     <div>
       <DisplayTasks />
-      <CreateTask />
     </div>
     )
   }
