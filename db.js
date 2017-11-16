@@ -45,27 +45,30 @@ const deleteTaskById = (taskId, cb) => {
   })
 }
 
-const addTaskToDB = (task, cb) => {
+const addTask = (task, cb) => {
   let uniqueId = uuid()
-  client.exists(uniqueId, (err, value) => {
-    if (err === null && value === 1) {
-      cb(err || new Error('Id already present'))
+  task['taskId'] = uniqueId
+  client.set(uniqueId, JSON.stringify(task), (err, val) => {
+    if (err === null && val === 0) {
+      cb(err || new Error('Adding task failed'))
     } else {
-      task['taskId'] = uniqueId
-      client.set(uniqueId, JSON.stringify(task))
-      cb(null, value)
+      cb(null, val)
     }
   })
 }
-
-const updateTaskInDB = (taskId, task, cb) => {
+const updateTask = (taskId, task, cb) => {
   client.exists(taskId, (err, value) => {
     if (err === null && value === 0) {
       cb(err || new Error(`Id doesn't exists`))
     } else {
       task['taskId'] = taskId
-      client.set(taskId, JSON.stringify(task))
-      cb(null, value)
+      client.set(taskId, JSON.stringify(task), (err, val) => {
+        if (err === null && val === 0) {
+          cb(err || new Error('Updating task failed'))
+        } else {
+          cb(null, val)
+        }
+      })
     }
   })
 }
@@ -74,6 +77,6 @@ module.exports = {
   getAllTasks,
   getTaskById,
   deleteTaskById,
-  addTaskToDB,
-  updateTaskInDB
+  addTask,
+  updateTask
 }
