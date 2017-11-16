@@ -4,11 +4,6 @@
  const bodyParser = require('body-parser')
  const route = require('./routes')
  const db = require('./db')
- const redis = require('redis')
- const client = redis.createClient()
-
- client.on('error', (err) => console.log('Error ' + err))
-
  app.use(cors())
  app.use(express.static('public'))
  app.use(bodyParser.json())
