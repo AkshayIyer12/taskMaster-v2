@@ -18,7 +18,7 @@
    }
    db.getAllTasks(function (err, data) {
      if (err) {
-       console.log(err)
+       res.json({'status': 'error', 'message': err.message})
      } else {
        tasks.data = data
        res.json(tasks)
@@ -98,7 +98,7 @@
   }
   db.getAllUsers(function (err, data) {
     if (err) {
-      console.log(err)
+      res.json({'status': 'error', 'message': err.message})
     } else {
       users.data = data
       res.json(users)
@@ -106,6 +106,17 @@
   })
  })
 
+  app.get(route.user, (req, res) => {
+   db.getUserById(req.params.userId, (err, value) => {
+     if (err) {
+       res.json({'status': 'error', 'message': err.message})
+     } else {
+       res.json({
+         'status': 'success',
+         'data': value})
+     }
+   })
+ })
 
  app.listen(3000, () => {
    console.log('running on 3000')
