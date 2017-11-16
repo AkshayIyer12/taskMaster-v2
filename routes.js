@@ -3,7 +3,8 @@ const routes = {
   task: '/task/:taskId',
   createTask: '/task',
   updateTask: '/task/:taskId',
-  displayUsers: '/users'
+  displayUsers: '/users',
+  user: '/user/:userId'
 }
 
 module.exports = routes
