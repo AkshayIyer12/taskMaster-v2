@@ -118,6 +118,19 @@
    })
  })
 
+app.delete(route.user, (req, res) => {
+   db.deleteUserById(req.params.userId, (err, value) => {
+     if (err) {
+       res.json({'status': 'error', 'message': err.message})
+     } else {
+       res.json({
+         'status': 'success',
+         'data': value
+       })
+     }
+   })
+ })  
+
  app.listen(3000, () => {
    console.log('running on 3000')
  })
