@@ -88,6 +88,20 @@ const getAllUsers = (cb) => {
    })
 }
 
+const getUserById = (userId, cb) => {
+  if (ObjectId.isValid(userId)) {
+    let userID = new ObjectId(userId)
+    db.collection('collector').find({_id: userID}).toArray((err, value) => {
+      if (err !== null || value.length === 0) {
+        cb(err || new Error('Cannot find the user id'))
+      } else {
+        cb(null, JSON.parse(JSON.stringify(value[0])))
+      }
+    })
+  } else {
+    cb(new Error('User Id is not valid'))
+  }
+}
 
 module.exports = {
   getAllTasks,
@@ -95,5 +109,6 @@ module.exports = {
   deleteTaskById,
   addTask,
   updateTask,
-  getAllUsers
+  getAllUsers,
+  getUserById
 }
