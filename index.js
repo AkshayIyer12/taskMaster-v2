@@ -2,12 +2,10 @@
  const cors = require('cors')
  const app = express()
  const bodyParser = require('body-parser')
- const multer = require('multer')
  const route = require('./routes')
  const db = require('./db')
  const redis = require('redis')
  const client = redis.createClient()
- let upload = multer()
 
  client.on('error', (err) => console.log('Error ' + err))
 
@@ -58,30 +56,44 @@
    })
  })
 
- app.post(route.createTask, upload.array(), (req, res) => {
-   db.addTask(req.body, (err, value) => {
-     if (err) {
-       res.json({'status': 'error', 'message': err.message})
-     } else {
-       res.json({
-         'status': 'success',
-         'data': value
-       })
-     }
-   })
+ app.post(route.createTask, (req, res) => {
+   if (Object.keys(req.body).length !== 0) {
+     db.addTask(req.body, (err, value) => {
+       if (err) {
+         res.json({'status': 'error', 'message': err.message})
+       } else {
+         res.json({
+           'status': 'success',
+           'data': value
+         })
+       }
+     })
+   } else {
+     res.json({
+       'status': 'error',
+       'message': 'Empty body'
+     })
+   }
  })
 
- app.put(route.updateTask, upload.array(), (req, res) => {
-   db.updateTask(req.params.taskId, req.body, (err, value) => {
-     if (err) {
-       res.json({'status': 'error', 'message': err.message})
-     } else {
-       res.json({
-         'status': 'success',
-         'data': value
-       })
-     }
-   })
+ app.put(route.updateTask, (req, res) => {
+   if (Object.keys(req.body).length !== 0) {
+     db.updateTask(req.params.taskId, req.body, (err, value) => {
+       if (err) {
+         res.json({'status': 'error', 'message': err.message})
+       } else {
+         res.json({
+           'status': 'success',
+           'data': value
+         })
+       }
+     })
+   } else {
+     res.json({
+       'status': 'error',
+       'message': 'Empty body'
+     })
+   }
  })
 
  app.listen(3000, () => {
