@@ -29,7 +29,7 @@ const getTaskById = (taskId, cb) => {
       if (err || value === null) {
         cb(err || new Error('Cannot find the id'))
       } else {
-        cb(null, JSON.parse(JSON.stringify(value[0])))
+        cb(null, value[0])
       }
     })
   } else {
@@ -94,7 +94,7 @@ const getUserById = (userId, cb) => {
       if (err !== null || value.length === 0) {
         cb(err || new Error('Cannot find the user id'))
       } else {
-        cb(null, JSON.parse(JSON.stringify(value[0])))
+        cb(null, value[0])
       }
     })
   } else {
@@ -151,7 +151,7 @@ const getTasksByUserId = (userId, cb) => {
       if (err === null && value.length === 0) {
         cb(err || new Error('Cannot find the task associated with id'))
       } else {
-        cb(null, JSON.parse(JSON.stringify(value)))
+        cb(null, value)
       }
     })
   } else {
