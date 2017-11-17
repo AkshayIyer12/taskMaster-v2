@@ -170,5 +170,5 @@ module.exports = {
   deleteUserById,
   addUser,
   updateUser,
-  getTasksByUser
+  getTasksByUserId
 }
