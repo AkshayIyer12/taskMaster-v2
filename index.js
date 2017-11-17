@@ -5,7 +5,7 @@
  const route = require('./routes')
  const db = require('./db')
  const PORT = process.env.PORT || 3000
- 
+
  app.use(express.static('public'))
  app.use(cors())
  app.use(bodyParser.json())
@@ -55,7 +55,7 @@
 
  app.post(route.createTask, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
-    req.body.type = "task"
+     req.body.type = 'task'
      db.addTask(req.body, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
@@ -136,7 +136,7 @@
 
  app.post(route.createUser, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
-    req.body.type = "user"
+     req.body.type = 'user'
      db.addUser(req.body, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
@@ -175,6 +175,19 @@
    }
  })
 
+ app.get(route.displayUserTasks, (req, res) => {
+   db.getTasksByUserId(req.params.userId, (err, value) => {
+     if (err) {
+       res.json({'status': 'error', 'message': err.message})
+     } else {
+       res.json({
+         'status': 'success',
+         'data': value
+       })
+     }
+   })
+ })
+
  app.listen(PORT, () => {
-   console.log('running on '+PORT)
+   console.log('running on ' + PORT)
  })
