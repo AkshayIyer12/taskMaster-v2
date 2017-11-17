@@ -6,7 +6,6 @@ let db = {}
 client.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/taskMaster-v2', (err, database) => {
   if (err) {
     throw new Error('Connection could not be established')
-    process.exit(1)
   } else {
     console.log('Server has started successfully')
     db = database
@@ -34,7 +33,7 @@ const getTaskById = (taskId, cb) => {
       }
     })
   } else {
-    cb(new Error('Task Id is not valid'))
+    cb(new Error('TaskId is not valid'))
   }
 }
 
@@ -49,7 +48,7 @@ const deleteTaskById = (taskId, cb) => {
       }
     })
   } else {
-    cb(new Error('Task Id is not valid'))
+    cb(new Error('TaskId is not valid'))
   }
 }
 
@@ -74,7 +73,7 @@ const updateTask = (taskId, task, cb) => {
       }
     })
   } else {
-    cb(new Error('Task Id is not valid'))
+    cb(new Error('TaskId is not valid'))
   }
 }
 
@@ -115,7 +114,7 @@ const deleteUserById = (userId, cb) => {
       }
     })
   } else {
-    cb(new Error('User Id is not valid'))
+    cb(new Error('UserId is not valid'))
   }
 }
 
@@ -140,7 +139,23 @@ const updateUser = (userId, user, cb) => {
       }
     })
   } else {
-    cb(new Error('User Id is not valid'))
+    cb(new Error('UserId is not valid'))
+  }
+}
+
+const getTasksByUserId = (userId, cb) => {
+  if (ObjectId.isValid(userId)) {
+    db.collection('collector').find({
+      $or: [ { assignTo: userId }, { assignBy: userId } ]
+    }).toArray((err, value) => {
+      if (err === null && value.length === 0) {
+        cb(err || new Error('Cannot find the task associated with id'))
+      } else {
+        cb(null, JSON.parse(JSON.stringify(value)))
+      }
+    })
+  } else {
+    cb(new Error('UserId is not valid'))
   }
 }
 
@@ -154,5 +169,6 @@ module.exports = {
   getUserById,
   deleteUserById,
   addUser,
-  updateUser
+  updateUser,
+  getTasksByUser
 }
