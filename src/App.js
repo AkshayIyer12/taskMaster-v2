@@ -5,12 +5,12 @@ import axios from 'axios'
 class RenderTask extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
     }
   }
 
   clickItem() {
+    // render rest
     console.log('Clicked')
   }
 
@@ -26,7 +26,7 @@ class RenderTask extends Component {
   }
 }
 
-class DisplayTasks extends Component {
+class Tasks extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -50,11 +50,7 @@ class DisplayTasks extends Component {
   }
 }
 
-// this.state.taskList.map(current =>
-//   <RenderTask currentTask={current} />
-// )
-
-class CreateTask extends Component {
+class TaskForm extends Component {
   constructor() {
     super()
     this.state = {
@@ -79,8 +75,7 @@ class CreateTask extends Component {
     .then((res) => {
       // handle result
       if(res.data.status === 'success') {
-        console.log('Task added!')
-        console.log(taskName, assignTo, dueDate, desc)        
+        console.log('Task added! - ', taskName)
         // re-Render allTasks
       }
       else {
@@ -92,7 +87,6 @@ class CreateTask extends Component {
 
   render() {
     const { taskName, assignTo, dueDate, desc } = this.state
-
     return (
       <div>
         <h2>create task</h2>
@@ -108,7 +102,7 @@ class CreateTask extends Component {
   }
 }
 
-class Tasks extends Component {
+class TaskListAndForm extends Component {
   
   constructor(props) {
     super(props)
@@ -122,38 +116,37 @@ class Tasks extends Component {
     .then(res => {
       if (res.data.status !== 'success') {
         // handle Error
-      }
-      const taskList = res.data.data.map(currentTask => {
-        return currentTask
-      })
+      } else {
+        const taskList = res.data.data.map(currentTask => {
+          return currentTask
+        })
 
-      this.setState({
-        taskList
-      })
+        this.setState({
+          taskList
+        })
+      }
     })
   }
 
   render() {
     return (
     <div>
-      <DisplayTasks value={this.state.taskList} />
-      <CreateTask />
+      <Tasks value={this.state.taskList} />
+      <TaskForm />
     </div>
     )
   }
 }
 
 class App extends Component {
-
   constructor(props) {
     super(props)
-
     this.state = {
     }
   }
   render() {
     return (
-      <Tasks />
+      <TaskListAndForm />
     )
   }
 }
