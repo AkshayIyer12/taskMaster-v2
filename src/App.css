@@ -15,19 +15,19 @@
 }
 
 .task-name {
-    background-color: green;
+    background-color: lightblue;
 }
 
 .assign-to {
-  background-color: red;
+  background-color: lightcoral;
 }
 
 .due-date {
-  background-color: yellow;
+  background-color: lightgray;
 }
 
 .desc {
-  background-color: blue;
+  background-color: lightcyan;
   width: 300px;
   text-align: center;
 }
