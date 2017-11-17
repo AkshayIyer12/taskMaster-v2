@@ -52,6 +52,7 @@
 
  app.post(route.createTask, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
+    req.body.type = "task"
      db.addTask(req.body, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
@@ -132,6 +133,7 @@
 
  app.post(route.createUser, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
+    req.body.type = "user"
      db.addUser(req.body, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
