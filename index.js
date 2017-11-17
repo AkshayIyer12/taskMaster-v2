@@ -4,6 +4,9 @@
  const bodyParser = require('body-parser')
  const route = require('./routes')
  const db = require('./db')
+ const PORT = process.env.PORT || 3000
+ 
+ app.use(express.static('public'))
  app.use(cors())
  app.use(bodyParser.json())
  app.use(bodyParser.urlencoded({
@@ -172,6 +175,6 @@
    }
  })
 
- app.listen(3000, () => {
-   console.log('running on 3000')
+ app.listen(PORT, () => {
+   console.log('running on '+PORT)
  })
