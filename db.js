@@ -3,9 +3,10 @@ const client = mongo.MongoClient
 const ObjectId = mongo.ObjectId
 let db = {}
 
-client.connect('mongodb://localhost:27017/taskMaster-v2', (err, database) => {
+client.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/taskMaster-v2', (err, database) => {
   if (err) {
-    console.log('Error ' + err)
+    throw new Error('Connection could not be established')
+    process.exit(1)
   } else {
     console.log('Server has started successfully')
     db = database
