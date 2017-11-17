@@ -8,7 +8,8 @@ const routes = {
   user: '/user/:userId',
   deleteUser: '/user/:userId',
   createUser: '/user',
-  updateUser: '/user/:userId'
+  updateUser: '/user/:userId',
+  displayUserTasks: '/tasks/:userId'
 }
 
 module.exports = routes
