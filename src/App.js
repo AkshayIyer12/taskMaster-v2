@@ -24,13 +24,37 @@ class RenderTask extends Component {
     // console.log(this)
   }
 
+  deleteTask () {
+    console.log('d e l e t t h i s')
+    // console.log(this.props.currentTask._id)
+    
+    axios.delete(`http://localhost:3000/task/${this.props.currentTask._id}`, { taskId:this.props.currentTask._id })
+    .then((res) => {
+      // handle result
+      // console.log('res------\n',res)
+      if(res.data.status === 'success') {
+        console.log('Task deleted!')
+        // re-Render allTasks
+        // pending
+        const state = this.state
+
+      }
+      else {
+        // handle error
+        console.log('Error deleting task!')
+      }
+    });
+    this.props.onChange()
+  }
+
   render () {
     return (
-        <li key={this.props.id} className='task-list' onClick={this.clickItem.bind(this)}>
-          <span className='field task-name'>{this.props.currentTask.taskName}</span>
+        <li key={this.props.id} className='task-list'>
+          <span className='field task-name' onClick={this.clickItem.bind(this)}>{this.props.currentTask.taskName}</span>
           {/* <span className='field assign-to'>{this.props.currentTask.assignTo}</span> */}
           <span className='field due-date'>{this.props.currentTask.dueDate}</span>
           <span className='field desc'>{this.props.currentTask.desc}</span>
+          <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
         </li>
     )
   }
@@ -51,7 +75,7 @@ class Tasks extends Component {
         <ul>
         {
           this.props.value.map(current =>
-            <RenderTask key={current._id} currentTask={current} />
+            <RenderTask key={current._id} currentTask={current} onChange={this.props.onChange} />
           )
         }
         </ul>
@@ -119,11 +143,11 @@ class TaskListAndForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      taskList: []        
+      taskList: []
     }
   }
 
-  componentDidMount () {
+  loadData() {
     axios.get(`http://localhost:3000/tasks`)
     .then(res => {
       if (res.data.status !== 'success') {
@@ -140,8 +164,17 @@ class TaskListAndForm extends Component {
     })
   }
 
+  componentDidMount () {
+    this.loadData()
+  }
+
   onChange () {
     console.log('onChange')
+    this.componentDidMount()
+  }
+
+  onDelete () {
+    console.log('onDelete')
     this.componentDidMount()
   }
 
@@ -149,7 +182,7 @@ class TaskListAndForm extends Component {
     return (
     <div>
       <TaskForm onChange={this.onChange.bind(this)} />
-      <Tasks value={this.state.taskList} />
+      <Tasks value={this.state.taskList} onChange={this.onDelete.bind(this)} />
     </div>
     )
   }
