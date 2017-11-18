@@ -6,17 +6,27 @@ class RenderTask extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      currentTaskInfo: this.props.currentTask  
     }
+  }
+
+  componentDidMount () {
+    console.log('Mounted')
   }
 
   clickItem() {
     // render rest
     console.log('Clicked')
+    // console.log(this.state.currentTaskInfo)
+    const state = this.state
+    state.currentTaskInfo.taskName = 'newName'
+    this.setState(state)
+    // console.log(this)
   }
 
   render () {
     return (
-        <li key={this.props.id} className='task-list' onClick={this.clickItem}>
+        <li key={this.props.id} className='task-list' onClick={this.clickItem.bind(this)}>
           <span className='field task-name'>{this.props.currentTask.taskName}</span>
           {/* <span className='field assign-to'>{this.props.currentTask.assignTo}</span> */}
           <span className='field due-date'>{this.props.currentTask.dueDate}</span>
@@ -68,6 +78,7 @@ class TaskForm extends Component {
   }
 
   onSubmit = (e) => {
+    console.log('Submitted')
     e.preventDefault()
     const { taskName, assignTo, dueDate, desc } = this.state
 
@@ -79,10 +90,11 @@ class TaskForm extends Component {
         // re-Render allTasks
       }
       else {
-        // handle errors
+        // handle error
         console.log('Error adding task!')
       }
     });
+    this.props.onChange();
   }
 
   render() {
@@ -128,11 +140,16 @@ class TaskListAndForm extends Component {
     })
   }
 
+  onChange () {
+    console.log('onChange')
+    this.componentDidMount()
+  }
+
   render() {
     return (
     <div>
+      <TaskForm onChange={this.onChange.bind(this)} />
       <Tasks value={this.state.taskList} />
-      <TaskForm />
     </div>
     )
   }
