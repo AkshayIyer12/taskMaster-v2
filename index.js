@@ -76,7 +76,6 @@
 
  app.put(route.updateTask, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
-     req.body.type = 'task'
      db.updateTask(req.params.taskId, req.body, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
@@ -158,7 +157,6 @@
 
  app.put(route.updateUser, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
-     req.params.type = 'user'
      db.updateTask(req.params.userId, req.body, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
@@ -179,6 +177,19 @@
 
  app.get(route.displayUserTasks, (req, res) => {
    db.getTasksByUserId(req.params.userId, (err, value) => {
+     if (err) {
+       res.json({'status': 'error', 'message': err.message})
+     } else {
+       res.json({
+         'status': 'success',
+         'data': value
+       })
+     }
+   })
+ })
+
+ app.post(route.login, (req, res) => {
+   db.autheticateUser(req.body, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
      } else {
