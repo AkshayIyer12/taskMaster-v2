@@ -152,17 +152,16 @@ const getTasksByUserId = (userId, cb) => {
         cb(err || new Error('Cannot find the task associated with id'))
       } else {
         let assignCategory = value.reduce((accum, task) => {
-          if (!('assignTo' in accum && 'assignBy' in accum)) {
-            accum.assignTo = []
-            accum.assignBy = []
-          }
           if (task.assignTo === userId) {
             accum.assignTo.push(task)
           } else {
             accum.assignBy.push(task)
           }
           return accum
-        }, {})
+        }, {
+          assignTo: [],
+          assignBy: []
+        })
         cb(null, assignCategory)
       }
     })
