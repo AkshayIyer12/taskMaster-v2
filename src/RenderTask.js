@@ -59,35 +59,25 @@ class RenderTask extends Component {
     }
   
     onSubmit = (e) => {
+      e.preventDefault()
       console.log('Updating now')
   
       const state = this.state
       state.editTaskFlag = false
       this.setState(state)
   
-      e.preventDefault()
       // check validity
       this.updateTask()
-      this.props.onChange()
+      // this.props.onChange()
     }
   
     updateTask () {
       console.log('updating')
       const { taskName, assignTo, dueDate, desc } = this.props.currentTask
       axios.put(`http://localhost:3000/task/${this.props.currentTask._id}`, { taskName, assignTo, dueDate, desc })
-        .then((res) => {
-          console.log(res)
-          // handle result
-          // if (res.data.status === 'success') {
-          //   console.log('Task updated!')
-          //   // re-Render allTasks
-          //   this.props.onChange()
-          // }
-          // else {
-          //   // handle error
-          //   console.log('Error updating task!')
-          // }
-        })
+      .then((res) => {
+        console.log(res)
+      })
     }
   
     render() {
@@ -116,7 +106,7 @@ class RenderTask extends Component {
           )
         }
       } else {
-        console.log('ya done now')
+        console.log('form rendered')
         const { taskName, assignTo, dueDate, desc } = this.state
         return (
           <div>
