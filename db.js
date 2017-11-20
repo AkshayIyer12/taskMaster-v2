@@ -1,4 +1,5 @@
 const mongo = require('mongodb')
+const helper = require('./helper')
 const client = mongo.MongoClient
 const ObjectId = mongo.ObjectId
 let db = {}
@@ -29,6 +30,9 @@ const getTaskById = (taskId, cb) => {
       if (err || value === null) {
         cb(err || new Error('Cannot find the id'))
       } else {
+        if ('type' in value[0]) {
+          delete value[0].type
+        }
         cb(null, value[0])
       }
     })
@@ -65,7 +69,7 @@ const addTask = (task, cb) => {
 const updateTask = (taskId, task, cb) => {
   if (ObjectId.isValid(taskId)) {
     let objID = new ObjectId(taskId)
-    db.collection('collector').update({_id: objID}, task, (err, res) => {
+    db.collection('collector').update({_id: objID}, {$set: task}, (err, res) => {
       if (err !== null || res.result['nModified'] === 0) {
         cb(err || new Error('Cannot update the task'))
       } else {
@@ -94,6 +98,10 @@ const getUserById = (userId, cb) => {
       if (err !== null || value.length === 0) {
         cb(err || new Error('Cannot find the user id'))
       } else {
+        if ('password' in value[0] || 'type' in value[0]) {
+          delete value[0].password
+          delete value[0].type
+        }
         cb(null, value[0])
       }
     })
@@ -119,19 +127,25 @@ const deleteUserById = (userId, cb) => {
 }
 
 const addUser = (user, cb) => {
-  db.collection('collector').insertOne(user, (err, val) => {
-    if (err !== null || val.result['n'] === 0) {
-      cb(err || new Error('Adding user failed'))
-    } else {
-      cb(null, val.insertedId)
-    }
+  helper.hashPassword(user.password)
+  .then(hash => {
+    user.password = hash
+    db.collection('collector').insertOne(user, (err, val) => {
+      if (err !== null || val.result['n'] === 0) {
+        cb(err || new Error('Adding user failed'))
+      } else {
+        cb(null, val.insertedId)
+      }
+    })
+  }).catch(err => {
+    cb(new Error(err))
   })
 }
 
 const updateUser = (userId, user, cb) => {
   if (ObjectId.isValid(userId)) {
     let userID = new ObjectId(userId)
-    db.collection('collector').update({_id: userID}, user, (err, res) => {
+    db.collection('collector').update({_id: userID}, {$set: user}, (err, res) => {
       if (err !== null || res.result['nModified'] === 0) {
         cb(err || new Error('Cannot update the user details'))
       } else {
@@ -170,6 +184,33 @@ const getTasksByUserId = (userId, cb) => {
   }
 }
 
+const autheticateUser = (data, cb) => {
+  let userId = data.userId
+  let password = data.password
+  if (ObjectId.isValid(userId)) {
+    let userID = new ObjectId(userId)
+    db.collection('collector').find({_id: userID}).toArray((err, value) => {
+      if (err !== null || value.length === 0) {
+        cb(err || new Error('Cannot find the user id'))
+      } else {
+        helper.compareHash(password, value[0].password)
+        .then(res => {
+          if (res) {
+            cb(null, res)
+          } else {
+            cb(new Error('Wrong Password'))
+          }
+        })
+        .catch(failure => {
+          cb(new Error(failure))
+        })
+      }
+    })
+  } else {
+    cb(new Error('UserId is not valid'))
+  }
+}
+
 module.exports = {
   getAllTasks,
   getTaskById,
@@ -181,5 +222,6 @@ module.exports = {
   deleteUserById,
   addUser,
   updateUser,
-  getTasksByUserId
+  getTasksByUserId,
+  autheticateUser
 }
