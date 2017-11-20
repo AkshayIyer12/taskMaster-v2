@@ -76,6 +76,7 @@
 
  app.put(route.updateTask, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
+     req.body.type = 'task'
      db.updateTask(req.params.taskId, req.body, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
@@ -157,6 +158,7 @@
 
  app.put(route.updateUser, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
+     req.params.type = 'user'
      db.updateTask(req.params.userId, req.body, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
