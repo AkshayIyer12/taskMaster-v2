@@ -27,6 +27,7 @@ class TaskForm extends Component {
         if (res.data.status === 'success') {
           console.log('Task added! - ', taskName)
           // re-Render allTasks
+          this.props.onChange()
         }
         else {
           // handle error
@@ -40,7 +41,6 @@ class TaskForm extends Component {
     e.preventDefault()
     // check validity
     this.addTask()
-    this.props.onChange()
   }
   
   render() {

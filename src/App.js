@@ -57,6 +57,7 @@ class TaskListAndForm extends Component {
 
   componentDidMount() {
     this.loadData()
+    // const names = this.state.taskList
   }
 
   onChange() {
@@ -70,6 +71,9 @@ class TaskListAndForm extends Component {
   }
 
   render() {
+    // console.log(this.state.taskList)
+    const names = this.state.taskList.map(current => current.taskName)
+    console.log('-', names)
     return (
       <div>
         <TaskForm onChange={this.onChange.bind(this)} />
