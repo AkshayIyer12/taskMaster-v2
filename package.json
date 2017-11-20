@@ -26,6 +26,7 @@
   "homepage": "https://github.com/anirudhbs/taskMaster-v2#readme",
   "dependencies": {
     "axios": "^0.17.1",
+    "bcrypt": "^1.0.3",
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "mongodb": "^2.2.33",
