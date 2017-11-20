@@ -57,27 +57,21 @@ class TaskListAndForm extends Component {
 
   componentDidMount() {
     this.loadData()
-    // const names = this.state.taskList
   }
 
   onChange() {
-    console.log('onChange')
-    this.loadData()
-  }
-
-  onDelete() {
-    console.log('onDelete')
+    console.log('onChange - tasklistandform')
     this.loadData()
   }
 
   render() {
     // console.log(this.state.taskList)
     const names = this.state.taskList.map(current => current.taskName)
-    console.log('-', names)
+    console.log('tasklist: ', names)
     return (
       <div>
         <TaskForm onChange={this.onChange.bind(this)} />
-        <Tasks value={this.state.taskList} onChange={this.onDelete.bind(this)} />
+        <Tasks value={this.state.taskList} onChange={this.onChange.bind(this)} />
       </div>
     )
   }
