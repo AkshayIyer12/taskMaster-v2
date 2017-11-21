@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import './App.css'
 import axios from 'axios'
+import { Switch, Route, Link } from 'react-router-dom'
+import './App.css'
 import TaskForm from './TaskForm'
 import RenderTask from './RenderTask'
+import CurrentTask from './CurrentTask'
 
 class Tasks extends Component {
 
@@ -60,14 +62,11 @@ class TaskListAndForm extends Component {
   }
 
   onChange() {
-    console.log('onChange - tasklistandform')
+    console.log('onChange in tasklistandform')
     this.loadData()
   }
 
   render() {
-    // console.log(this.state.taskList)
-    const names = this.state.taskList.map(current => current.taskName)
-    console.log('tasklist: ', names)
     return (
       <div>
         <TaskForm onChange={this.onChange.bind(this)} />
@@ -87,7 +86,70 @@ class App extends Component {
 
   render() {
     return (
-      <TaskListAndForm />
+      <div>
+        <Header />
+        <Main />
+      </div>
+    )
+  }
+}
+
+class Header extends Component {
+  render () {
+    return (
+      <header>
+        <nav>
+          <ul>
+            <li><Link to='/'>Home</Link></li>
+            <li><Link to='/logIn'>Log In</Link></li>
+            <li><Link to='/taskListAndForm'>Tasks</Link></li>
+            <li><Link to='/task/:taskid'>Current Task</Link></li>
+          </ul>
+        </nav>
+      </header>
+    )
+  }
+}
+
+class Main extends Component {
+  render () {
+    return (
+      <main>
+      <Switch>
+        <Route exact path='/' component={Home}/>
+        <Route path='/LogIn' component={LogIn}/>
+        <Route path='/taskListAndForm' component={TaskListAndForm}/>
+        <Route path='/task/:taskid' component={CurrentTask}/>
+      </Switch>
+      </main>
+    )
+  }
+}
+
+class LogIn extends Component {
+  
+  render () {
+    return (
+      <div>
+        log in
+      </div>
+    )
+  }
+}
+
+class Home extends Component {
+
+  onClick() {
+    console.log('clicked')
+    // this.props.router.push(`/tasks`)
+    console.log(this.props.router)
+  }
+  render () {
+    return (
+      <div>
+      <h1>home</h1>
+      <Link to='/taskListAndForm'>all tasks</Link>
+      </div>
     )
   }
 }

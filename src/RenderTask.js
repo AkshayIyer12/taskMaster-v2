@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'; // Route
 import './App.css'
 
 class RenderTask extends Component {
@@ -7,9 +8,8 @@ class RenderTask extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      showDetailsFlag: false,
-      editTaskFlag: false,
       currentTaskInfo: {
+        id: this.props.id,
         taskName: this.props.currentTask.taskName,
         assignTo: this.props.currentTask.assignTo,
         dueDate: this.props.currentTask.dueDate,
@@ -19,7 +19,7 @@ class RenderTask extends Component {
   }
 
   deleteTask() {
-    console.log('d e l e t t h i s')
+    console.log('Delete current task')
     const { _id } = this.props.currentTask
     axios.delete(`http://localhost:3000/task/${this.props.currentTask._id}`, { _id })
     .then((res) => {
@@ -27,7 +27,6 @@ class RenderTask extends Component {
       if (res.data.status === 'success') {
         console.log('Task deleted!')
         // re-Render allTasks
-        console.log('delete done', this.props)
         this.props.onChange()
       }
       else {
@@ -37,111 +36,46 @@ class RenderTask extends Component {
     })
   }
 
-  showDetails() {
-    // console.log('showDetails')
-    // console.log(this.state.showDetailsFlag)
-    const state = this.state
-    state.showDetailsFlag = state.showDetailsFlag ? false : true
-    this.setState(state)
-    // console.log(this.state.showDetailsFlag)    
-  }
-
-  editTask () {
-    // console.log('editTask')
-    const state = this.state
-    state.editTaskFlag = true
-    this.setState(state)
-    // console.log(this.state.currentTaskInfo.taskName)
-  }
-
-  onChange = (e) => {
-    const state = this.state.currentTaskInfo
-    // console.log('e', e.target.value)
-    state[e.target.name] = e.target.value
-    this.setState(state)
-    // console.log('onchange', this.state)
-  }
-
-  onSubmit = (e) => {
-    e.preventDefault()
-    // console.log('Updating now')
-    this.updateTask()
-    this.props.onChange()
-    // console.log(this.state.currentTaskInfo)
-    const state = this.state
-    state.editTaskFlag = false
-    this.setState(state)
-    this.props.onChange()
-    // check validity
-  }
-
   updateTask () {
     console.log('updating current task')
-    // const { taskName, assignTo, dueDate, desc } = this.props.currentTask
-    console.log('newformdata', this.state.currentTaskInfo)
     const tempObj = this.state.currentTaskInfo
-    console.log('newstuff', this.state.currentTaskInfo)
-    // tempObj.taskName = this.state.currentTaskInfo.taskName
-    console.log('temp', tempObj)
     axios.put(`http://localhost:3000/task/${this.props.currentTask._id}`, tempObj)
     .then((res) => {
-      // console.log(res)
       if(res.data.status !== 'success') {
         // handle error
       } else {
-        // console.log('do something')
-        // console.log('new', this.props.currentTask)
-        // const state = this.state
-        // state.assignTo = 
         this.props.onChange()
       }
     })
   }
 
+  showDetails () {
+    console.log('show details')
+
+  }
   render() {
-    // console.log(this.props.currentTask._id)
-    if(!this.state.editTaskFlag) {
-      if(!this.state.showDetailsFlag) {
-        return (
-          <li key={this.props.id} className='task-list'>
-            <span className='field task-name' onClick={this.showDetails.bind(this)}>{this.state.currentTaskInfo.taskName}</span>
-            {/* <span><button onClick={this.showDetails.bind(this)}>Show</button></span> */}
-            <span><button onClick={this.editTask.bind(this)}>Update</button></span>
-            <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
-          </li>
-        )
-      } else {
+    const id = this.props.currentTask._id
         return (
           <li key={this.props.id} className='task-list'>
             <span className='field task-name' onClick={this.showDetails.bind(this)}>{this.state.currentTaskInfo.taskName}</span>
             <span className='field assign-to'>{this.props.currentTask.assignTo}</span>
-            <span className='field due-date'>{this.props.currentTask.dueDate}</span>
+            <span className='field du2e-date'>{this.props.currentTask.dueDate}</span>
             <span className='field desc'>{this.props.currentTask.desc}</span>
-            <span><button onClick={this.editTask.bind(this)}>Update</button></span>
-            {/* <span><button onClick={this.showDetails.bind(this)}>Hide</button></span> */}
+            {/* <Link to={`/task/${id}`} id={id}>edit</Link> */}
+            <LinkMe to={`/task/${id}`} id={id} />
             <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
           </li>
         )
-      }
-    } else {
-      const { taskName, assignTo, dueDate, desc } = this.state.currentTaskInfo
-      return (
-        <div>
-          {/* <form onSubmit={this.onSubmit}> */}
-          <input type='text' name='taskName' value={taskName} onChange={this.onChange} placeholder='Name' />
-          <input type='text' name='assignTo' value={assignTo} onChange={this.onChange} placeholder='Assign to' />
-          <input type='text' name='dueDate' value={dueDate} onChange={this.onChange} placeholder='Due Date' />
-          <input type='textarea' name='desc' value={desc} onChange={this.onChange} placeholder='Description' />
-          <button type='submit' onClick={this.onSubmit.bind(this)}>Update</button>
-          {/* </form> */}
-        </div>
-      )
-
-      // return (
-      //   <h1>hello</h1>
-      // )
-    }
   }
 }
 
+class LinkMe extends Component {
+  render () {
+    return (
+    <button>
+      <Link to={this.props.to} id={this.props.id}>Details</Link>
+    </button>
+    )
+  }
+}
 export default RenderTask
