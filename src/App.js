@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom'
 import './App.css'
 import TaskForm from './TaskForm'
 import RenderTask from './RenderTask'
@@ -128,7 +128,7 @@ class Home extends Component {
 
   onClick() {
     console.log('clicked')
-    // this.props.router.push(`/tasks`);
+    // this.props.router.push(`/tasks`)
     console.log(this.props.router)
   }
   render () {

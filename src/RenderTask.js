@@ -9,7 +9,7 @@ class RenderTask extends Component {
     super(props)
     this.state = {
       showDetailsFlag: false,
-      editTaskFlag: false,
+      // editTaskFlag: false,
       currentTaskInfo: {
         id: this.props.id,
         taskName: this.props.currentTask.taskName,
@@ -45,29 +45,29 @@ class RenderTask extends Component {
     this.setState(state)
   }
 
-  editTask () {
-    console.log('editTask')
-    const state = this.state
-    state.editTaskFlag = true
-    this.setState(state)
-  }
+  // editTask () {
+  //   console.log('editTask')
+  //   const state = this.state
+  //   state.editTaskFlag = true
+  //   this.setState(state)
+  // }
 
-  onChange = (e) => {
-    const state = this.state.currentTaskInfo
-    state[e.target.name] = e.target.value
-    this.setState(state)
-  }
+  // onChange = (e) => {
+  //   const state = this.state.currentTaskInfo
+  //   state[e.target.name] = e.target.value
+  //   this.setState(state)
+  // }
 
-  onSubmit = (e) => {
-    e.preventDefault()
-    this.updateTask()
-    this.props.onChange()
-    const state = this.state
-    state.editTaskFlag = false
-    this.setState(state)
-    this.props.onChange()
-    // check validity
-  }
+  // onSubmit = (e) => {
+  //   e.preventDefault()
+  //   this.updateTask()
+  //   this.props.onChange()
+  //   const state = this.state
+  //   state.editTaskFlag = false
+  //   this.setState(state)
+  //   this.props.onChange()
+  //   // check validity
+  // }
 
   updateTask () {
     console.log('updating current task')
@@ -85,14 +85,13 @@ class RenderTask extends Component {
   render() {
     const id = this.props.currentTask._id
     // console.log(id)
-    if(!this.state.editTaskFlag) {
       if(!this.state.showDetailsFlag) {
         return (
           <li key={this.props.id} className='task-list'>
             <span className='field task-name' onClick={this.showDetails.bind(this)}>{this.state.currentTaskInfo.taskName}</span>
             {/* <span><button onClick={this.showDetails.bind(this)}>Show</button></span> */}
             <Link to={`/task/${id}`} id={id}>edit</Link>
-            <span><button onClick={this.editTask.bind(this)}>Update</button></span>
+            {/* <span><button onClick={this.editTask.bind(this)}>Update</button></span> */}
             <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
           </li>
         )
@@ -103,24 +102,12 @@ class RenderTask extends Component {
             <span className='field assign-to'>{this.props.currentTask.assignTo}</span>
             <span className='field due-date'>{this.props.currentTask.dueDate}</span>
             <span className='field desc'>{this.props.currentTask.desc}</span>
-            <span><button onClick={this.editTask.bind(this)}>Update</button></span>
+            {/* <span><button onClick={this.editTask.bind(this)}>Update</button></span> */}
             {/* <span><button onClick={this.showDetails.bind(this)}>Hide</button></span> */}
             <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
           </li>
         )
       }
-    } else {
-      const { taskName, assignTo, dueDate, desc } = this.state.currentTaskInfo
-      return (
-        <div>
-          <input type='text' name='taskName' value={taskName} onChange={this.onChange} placeholder='Name' />
-          <input type='text' name='assignTo' value={assignTo} onChange={this.onChange} placeholder='Assign to' />
-          <input type='text' name='dueDate' value={dueDate} onChange={this.onChange} placeholder='Due Date' />
-          <input type='textarea' name='desc' value={desc} onChange={this.onChange} placeholder='Description' />
-          <button type='submit' onClick={this.onSubmit.bind(this)}>Update</button>
-        </div>
-      )
-    }
   }
 }
 
