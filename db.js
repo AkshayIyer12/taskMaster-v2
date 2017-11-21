@@ -1,5 +1,4 @@
 const mongo = require('mongodb')
-const helper = require('./helper')
 const client = mongo.MongoClient
 const ObjectId = mongo.ObjectId
 let db = {}
@@ -126,19 +125,42 @@ const deleteUserById = (userId, cb) => {
   }
 }
 
+const checkUser = (emailId, cb) => {
+  db.collection('collector').find({emailId: emailId})
+  .toArray((err, value) => {
+    if (err) {
+      cb(err)
+    } else if (value.length === 1) {
+      cb(null, true)
+    } else {
+      cb(null, false)
+    }
+  })
+}
+
+const checkAndAddUser = (user, cb) => {
+  checkUser(user.emailId, (err, value) => {
+    if (err || value) {
+      cb(err || new Error('User already exists!'))
+    } else {
+      db.collection('collector').insertOne(user, (err, val) => {
+        if (err !== null || val.result['n'] === 0) {
+          cb(err || new Error('Adding user failed'))
+        } else {
+          cb(null, val.insertedId)
+        }
+      })
+    }
+  })
+}
+
 const addUser = (user, cb) => {
-  helper.hashPassword(user.password)
-  .then(hash => {
-    user.password = hash
-    db.collection('collector').insertOne(user, (err, val) => {
-      if (err !== null || val.result['n'] === 0) {
-        cb(err || new Error('Adding user failed'))
-      } else {
-        cb(null, val.insertedId)
-      }
-    })
-  }).catch(err => {
-    cb(new Error(err))
+  db.collection('collector').insertOne(user, (err, val) => {
+    if (err !== null || val.result['n'] === 0) {
+      cb(err || new Error('Adding user failed'))
+    } else {
+      cb(null, val.insertedId)
+    }
   })
 }
 
@@ -184,33 +206,6 @@ const getTasksByUserId = (userId, cb) => {
   }
 }
 
-const autheticateUser = (data, cb) => {
-  let userId = data.userId
-  let password = data.password
-  if (ObjectId.isValid(userId)) {
-    let userID = new ObjectId(userId)
-    db.collection('collector').find({_id: userID}).toArray((err, value) => {
-      if (err !== null || value.length === 0) {
-        cb(err || new Error('Cannot find the user id'))
-      } else {
-        helper.compareHash(password, value[0].password)
-        .then(res => {
-          if (res) {
-            cb(null, res)
-          } else {
-            cb(new Error('Wrong Password'))
-          }
-        })
-        .catch(failure => {
-          cb(new Error(failure))
-        })
-      }
-    })
-  } else {
-    cb(new Error('UserId is not valid'))
-  }
-}
-
 module.exports = {
   getAllTasks,
   getTaskById,
@@ -223,5 +218,5 @@ module.exports = {
   addUser,
   updateUser,
   getTasksByUserId,
-  autheticateUser
+  checkAndAddUser
 }
