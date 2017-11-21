@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import './App.css'
 import axios from 'axios'
+import { HashRouter, Switch, Route, Link } from 'react-router-dom';
+import './App.css'
 import TaskForm from './TaskForm'
 import RenderTask from './RenderTask'
 
@@ -65,8 +66,6 @@ class TaskListAndForm extends Component {
   }
 
   render() {
-    // const names = this.state.taskList.map(current => current.taskName)
-    // console.log('tasklist: ', names)
     return (
       <div>
         <TaskForm onChange={this.onChange.bind(this)} />
@@ -86,7 +85,49 @@ class App extends Component {
 
   render() {
     return (
-      <TaskListAndForm />
+      <div>
+        <Header />
+        <Main />
+      </div>
+    )
+  }
+}
+
+class Header extends Component {
+  render () {
+    return (
+      <header>
+        <nav>
+          <ul>
+            <li><Link to='/'>Home</Link></li>
+            <li><Link to='/taskListAndForm'>Tasks</Link></li>
+            <li><Link to='/placeholder'>PlaceHolder</Link></li>
+          </ul>
+        </nav>
+      </header>
+    )
+  }
+}
+
+class Main extends Component {
+  render () {
+    return (
+      <main>
+      <Switch>
+        <Route exact path='/' component={Home}/>
+        <Route path='/taskListAndForm' component={TaskListAndForm}/>
+        {/* <Route path='/green' component={Green}/> */}
+      </Switch>
+      </main>
+      
+    )
+  }
+}
+
+class Home extends Component {
+  render () {
+    return (
+      <h1>home</h1>
     )
   }
 }
