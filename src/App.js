@@ -65,9 +65,8 @@ class TaskListAndForm extends Component {
   }
 
   render() {
-    // console.log(this.state.taskList)
-    const names = this.state.taskList.map(current => current.taskName)
-    console.log('tasklist: ', names)
+    // const names = this.state.taskList.map(current => current.taskName)
+    // console.log('tasklist: ', names)
     return (
       <div>
         <TaskForm onChange={this.onChange.bind(this)} />

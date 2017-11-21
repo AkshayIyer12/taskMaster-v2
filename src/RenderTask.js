@@ -19,7 +19,7 @@ class RenderTask extends Component {
   }
 
   deleteTask() {
-    console.log('d e l e t t h i s')
+    console.log('Delete current task')
     const { _id } = this.props.currentTask
     axios.delete(`http://localhost:3000/task/${this.props.currentTask._id}`, { _id })
     .then((res) => {
@@ -27,7 +27,6 @@ class RenderTask extends Component {
       if (res.data.status === 'success') {
         console.log('Task deleted!')
         // re-Render allTasks
-        console.log('delete done', this.props)
         this.props.onChange()
       }
       else {
@@ -38,36 +37,29 @@ class RenderTask extends Component {
   }
 
   showDetails() {
-    // console.log('showDetails')
-    // console.log(this.state.showDetailsFlag)
+    console.log('showDetails')
     const state = this.state
     state.showDetailsFlag = state.showDetailsFlag ? false : true
     this.setState(state)
-    // console.log(this.state.showDetailsFlag)    
   }
 
   editTask () {
-    // console.log('editTask')
+    console.log('editTask')
     const state = this.state
     state.editTaskFlag = true
     this.setState(state)
-    // console.log(this.state.currentTaskInfo.taskName)
   }
 
   onChange = (e) => {
     const state = this.state.currentTaskInfo
-    // console.log('e', e.target.value)
     state[e.target.name] = e.target.value
     this.setState(state)
-    // console.log('onchange', this.state)
   }
 
   onSubmit = (e) => {
     e.preventDefault()
-    // console.log('Updating now')
     this.updateTask()
     this.props.onChange()
-    // console.log(this.state.currentTaskInfo)
     const state = this.state
     state.editTaskFlag = false
     this.setState(state)
@@ -77,29 +69,18 @@ class RenderTask extends Component {
 
   updateTask () {
     console.log('updating current task')
-    // const { taskName, assignTo, dueDate, desc } = this.props.currentTask
-    console.log('newformdata', this.state.currentTaskInfo)
     const tempObj = this.state.currentTaskInfo
-    console.log('newstuff', this.state.currentTaskInfo)
-    // tempObj.taskName = this.state.currentTaskInfo.taskName
-    console.log('temp', tempObj)
     axios.put(`http://localhost:3000/task/${this.props.currentTask._id}`, tempObj)
     .then((res) => {
-      // console.log(res)
       if(res.data.status !== 'success') {
         // handle error
       } else {
-        // console.log('do something')
-        // console.log('new', this.props.currentTask)
-        // const state = this.state
-        // state.assignTo = 
         this.props.onChange()
       }
     })
   }
 
   render() {
-    // console.log(this.props.currentTask._id)
     if(!this.state.editTaskFlag) {
       if(!this.state.showDetailsFlag) {
         return (
@@ -127,19 +108,13 @@ class RenderTask extends Component {
       const { taskName, assignTo, dueDate, desc } = this.state.currentTaskInfo
       return (
         <div>
-          {/* <form onSubmit={this.onSubmit}> */}
           <input type='text' name='taskName' value={taskName} onChange={this.onChange} placeholder='Name' />
           <input type='text' name='assignTo' value={assignTo} onChange={this.onChange} placeholder='Assign to' />
           <input type='text' name='dueDate' value={dueDate} onChange={this.onChange} placeholder='Due Date' />
           <input type='textarea' name='desc' value={desc} onChange={this.onChange} placeholder='Description' />
           <button type='submit' onClick={this.onSubmit.bind(this)}>Update</button>
-          {/* </form> */}
         </div>
       )
-
-      // return (
-      //   <h1>hello</h1>
-      // )
     }
   }
 }
