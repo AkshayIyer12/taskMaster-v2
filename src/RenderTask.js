@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'; // Route
 import './App.css'
 
 class RenderTask extends Component {
@@ -10,6 +11,7 @@ class RenderTask extends Component {
       showDetailsFlag: false,
       editTaskFlag: false,
       currentTaskInfo: {
+        id: this.props.id,
         taskName: this.props.currentTask.taskName,
         assignTo: this.props.currentTask.assignTo,
         dueDate: this.props.currentTask.dueDate,
@@ -37,7 +39,7 @@ class RenderTask extends Component {
   }
 
   showDetails() {
-    console.log('showDetails')
+    console.log('showDetails -', this.props.currentTask._id)
     const state = this.state
     state.showDetailsFlag = state.showDetailsFlag ? false : true
     this.setState(state)
@@ -81,12 +83,15 @@ class RenderTask extends Component {
   }
 
   render() {
+    const id = this.props.currentTask._id
+    // console.log(id)
     if(!this.state.editTaskFlag) {
       if(!this.state.showDetailsFlag) {
         return (
           <li key={this.props.id} className='task-list'>
             <span className='field task-name' onClick={this.showDetails.bind(this)}>{this.state.currentTaskInfo.taskName}</span>
             {/* <span><button onClick={this.showDetails.bind(this)}>Show</button></span> */}
+            <Link to={`/task/${id}`} id={id}>edit</Link>
             <span><button onClick={this.editTask.bind(this)}>Update</button></span>
             <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
           </li>

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { HashRouter, Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import './App.css'
 import TaskForm from './TaskForm'
 import RenderTask from './RenderTask'
+import CurrentTask from './CurrentTask'
 
 class Tasks extends Component {
 
@@ -101,7 +102,7 @@ class Header extends Component {
           <ul>
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/taskListAndForm'>Tasks</Link></li>
-            <li><Link to='/placeholder'>PlaceHolder</Link></li>
+            <li><Link to='/task/:taskid'>Current Task</Link></li>
           </ul>
         </nav>
       </header>
@@ -116,18 +117,26 @@ class Main extends Component {
       <Switch>
         <Route exact path='/' component={Home}/>
         <Route path='/taskListAndForm' component={TaskListAndForm}/>
-        {/* <Route path='/green' component={Green}/> */}
+        <Route path='/task/:taskid' component={CurrentTask}/>
       </Switch>
       </main>
-      
     )
   }
 }
 
 class Home extends Component {
+
+  onClick() {
+    console.log('clicked')
+    // this.props.router.push(`/tasks`);
+    console.log(this.props.router)
+  }
   render () {
     return (
+      <div>
       <h1>home</h1>
+      <Link to='/taskListAndForm'>all tasks</Link>
+      </div>
     )
   }
 }
