@@ -8,8 +8,6 @@ class RenderTask extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      showDetailsFlag: false,
-      // editTaskFlag: false,
       currentTaskInfo: {
         id: this.props.id,
         taskName: this.props.currentTask.taskName,
@@ -38,37 +36,6 @@ class RenderTask extends Component {
     })
   }
 
-  showDetails() {
-    console.log('showDetails -', this.props.currentTask._id)
-    const state = this.state
-    state.showDetailsFlag = state.showDetailsFlag ? false : true
-    this.setState(state)
-  }
-
-  // editTask () {
-  //   console.log('editTask')
-  //   const state = this.state
-  //   state.editTaskFlag = true
-  //   this.setState(state)
-  // }
-
-  // onChange = (e) => {
-  //   const state = this.state.currentTaskInfo
-  //   state[e.target.name] = e.target.value
-  //   this.setState(state)
-  // }
-
-  // onSubmit = (e) => {
-  //   e.preventDefault()
-  //   this.updateTask()
-  //   this.props.onChange()
-  //   const state = this.state
-  //   state.editTaskFlag = false
-  //   this.setState(state)
-  //   this.props.onChange()
-  //   // check validity
-  // }
-
   updateTask () {
     console.log('updating current task')
     const tempObj = this.state.currentTaskInfo
@@ -82,33 +49,33 @@ class RenderTask extends Component {
     })
   }
 
+  showDetails () {
+    console.log('show details')
+
+  }
   render() {
     const id = this.props.currentTask._id
-    // console.log(id)
-      if(!this.state.showDetailsFlag) {
-        return (
-          <li key={this.props.id} className='task-list'>
-            <span className='field task-name' onClick={this.showDetails.bind(this)}>{this.state.currentTaskInfo.taskName}</span>
-            {/* <span><button onClick={this.showDetails.bind(this)}>Show</button></span> */}
-            <Link to={`/task/${id}`} id={id}>edit</Link>
-            {/* <span><button onClick={this.editTask.bind(this)}>Update</button></span> */}
-            <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
-          </li>
-        )
-      } else {
         return (
           <li key={this.props.id} className='task-list'>
             <span className='field task-name' onClick={this.showDetails.bind(this)}>{this.state.currentTaskInfo.taskName}</span>
             <span className='field assign-to'>{this.props.currentTask.assignTo}</span>
-            <span className='field due-date'>{this.props.currentTask.dueDate}</span>
+            <span className='field du2e-date'>{this.props.currentTask.dueDate}</span>
             <span className='field desc'>{this.props.currentTask.desc}</span>
-            {/* <span><button onClick={this.editTask.bind(this)}>Update</button></span> */}
-            {/* <span><button onClick={this.showDetails.bind(this)}>Hide</button></span> */}
+            {/* <Link to={`/task/${id}`} id={id}>edit</Link> */}
+            <LinkMe to={`/task/${id}`} id={id} />
             <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
           </li>
         )
-      }
   }
 }
 
+class LinkMe extends Component {
+  render () {
+    return (
+    <button>
+      <Link to={this.props.to} id={this.props.id}>Details</Link>
+    </button>
+    )
+  }
+}
 export default RenderTask

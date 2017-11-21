@@ -62,7 +62,7 @@ class TaskListAndForm extends Component {
   }
 
   onChange() {
-    console.log('onChange - tasklistandform')
+    console.log('onChange in tasklistandform')
     this.loadData()
   }
 
@@ -101,6 +101,7 @@ class Header extends Component {
         <nav>
           <ul>
             <li><Link to='/'>Home</Link></li>
+            <li><Link to='/logIn'>Log In</Link></li>
             <li><Link to='/taskListAndForm'>Tasks</Link></li>
             <li><Link to='/task/:taskid'>Current Task</Link></li>
           </ul>
@@ -116,10 +117,22 @@ class Main extends Component {
       <main>
       <Switch>
         <Route exact path='/' component={Home}/>
+        <Route path='/LogIn' component={LogIn}/>
         <Route path='/taskListAndForm' component={TaskListAndForm}/>
         <Route path='/task/:taskid' component={CurrentTask}/>
       </Switch>
       </main>
+    )
+  }
+}
+
+class LogIn extends Component {
+  
+  render () {
+    return (
+      <div>
+        log in
+      </div>
     )
   }
 }
