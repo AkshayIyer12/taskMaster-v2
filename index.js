@@ -211,15 +211,9 @@
    db.checkAndAddUser(user, (err, value) => {
      if (err) {
        res.redirect('/login')
-      //  res.json({'status': 'error', 'message': err.message})
      } else {
-       console.log(value)
-       res.cookie('userId', value)
+       res.cookie('userId', value, { encode: String })
        res.redirect('/')
-      // res.json({
-      //    'status': 'success',
-      //    'data': value
-      //  })
      }
    })
  })
