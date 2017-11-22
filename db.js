@@ -141,13 +141,15 @@ const checkAndAddUser = (user, cb) => {
     if (err) {
       cb(err)
     } else if (value.length === 1) {
-      cb(null, value[0]._id)
+      let id = value[0]._id.toHexString()
+      cb(null, id)
     } else {
       db.collection('collector').insertOne(user, (err, val) => {
         if (err !== null || val.result['n'] === 0) {
           cb(err || new Error('Adding user failed'))
         } else {
-          cb(null, val.insertedId)
+          let id = val.insertedId.toHexString()
+          cb(null, id)
         }
       })
     }

@@ -9,11 +9,9 @@
  const db = require('./db')
  const PORT = process.env.PORT || 3000
  const session = require('express-session')
- const cookieParser = require('cookie-parser')
 
  // app.use(express.static('public'))
  app.use(cors())
- app.use(cookieParser())
  app.use(session({ secret: '5a150a5add703325bcffc6c9' }))
  app.use(passport.initialize())
  app.use(passport.session())
@@ -213,14 +211,9 @@
    db.checkAndAddUser(user, (err, value) => {
      if (err) {
        res.redirect('/login')
-      //  res.json({'status': 'error', 'message': err.message})
      } else {
-       res.cookie('userId', value)
+       res.cookie('userId', value, { encode: String })
        res.redirect('/')
-      // res.json({
-      //    'status': 'success',
-      //    'data': value
-      //  })
      }
    })
  })
@@ -231,7 +224,6 @@
 
  app.get('/', function (req, res) {
    if (req.isAuthenticated()) {
-     console.log(req.cookies)
      res.sendFile(path.join(__dirname, 'public', 'index.html'))
    } else {
      res.sendFile(path.join(__dirname, 'public', 'login.html'))
