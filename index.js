@@ -210,12 +210,14 @@
    }
    db.checkAndAddUser(user, (err, value) => {
      if (err) {
-       res.json({'status': 'error', 'message': err.message})
+       res.redirect('/login')
+      //  res.json({'status': 'error', 'message': err.message})
      } else {
-       res.json({
-         'status': 'success',
-         'data': value
-       })
+       res.redirect('/')
+      // res.json({
+      //    'status': 'success',
+      //    'data': value
+      //  })
      }
    })
  })
@@ -225,17 +227,11 @@
  })
 
  app.get('/', function (req, res) {
-   var html = `<ul>\
-    <li><a href='/auth/google'>Google</a></li>\
-    <li><a href='/logout'>logout</a></li>\
-  </ul>`
-
    if (req.isAuthenticated()) {
-     html += '<p>authenticated as user:</p>'
-     html += '<pre>' + JSON.stringify(req.user, null, 4) + '</pre>'
+     res.sendFile(path.join(__dirname, 'public', 'index.html'))
+   } else {
+     res.sendFile(path.join(__dirname, 'public', 'login.html'))
    }
-
-   res.send(html)
  })
 
  app.get('/logout', function (req, res) {
