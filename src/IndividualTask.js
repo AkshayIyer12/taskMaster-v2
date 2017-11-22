@@ -48,30 +48,27 @@ class IndividualTask extends Component {
       }
     })
   }
-
-  showDetails () {
-    console.log('show details')
-
-  }
   
   clickTask () {
     console.log('clicked on task', this.props.currentTask._id)
     // this.props.history.push('/red')
-    console.log(this)
+    // console.log(this.context.history)
   }
+
   render() {
+    // console.log(this.context)
     const id = this.props.currentTask._id
-        return (
-          <li key={this.props.id} className='task-list' onClick={this.clickTask.bind(this)}>
-            <span className='field task-name' onClick={this.showDetails.bind(this)}>{this.state.currentTaskInfo.taskName}</span>
-            <span className='field assign-to'>{this.props.currentTask.assignTo}</span>
-            <span className='field du2e-date'>{this.props.currentTask.dueDate}</span>
-            <span className='field desc'>{this.props.currentTask.desc}</span>
-            {/* <Link to={`/task/${id}`} id={id}>edit</Link> */}
-            <ShowDetails to={`/task/${id}`} id={id} />
-            <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
-          </li>
-        )
+    return (
+      <li key={this.props.id} className='task-list' onClick={this.clickTask.bind(this)}>
+        <span className='field task-name'>{this.state.currentTaskInfo.taskName}</span>
+        <span className='field assign-to'>{this.props.currentTask.assignTo}</span>
+        <span className='field du2e-date'>{this.props.currentTask.dueDate}</span>
+        <span className='field desc'>{this.props.currentTask.desc}</span>
+        {/* <Link to={`/task/${id}`} id={id}>edit</Link> */}
+        <ShowDetails to={`/task/${id}`} id={id} />
+        <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
+      </li>
+    )
   }
 }
 

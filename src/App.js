@@ -3,6 +3,7 @@ import { Switch, Route, Link } from 'react-router-dom'
 import './App.css'
 import TaskDetails from './TaskDetails'
 import TaskListAndForm from'./TaskListAndForm'
+import NewTask from './NewTask'
 
 class App extends Component {
 
@@ -48,6 +49,7 @@ class Main extends Component {
         <Route path='/LogIn' component={LogIn}/>
         <Route path='/taskListAndForm' component={TaskListAndForm}/>
         <Route path='/task/:taskid' component={TaskDetails}/>
+        <Route path='/newtask' component={NewTask}/>
       </Switch>
       </main>
     )

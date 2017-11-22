@@ -80,3 +80,7 @@ body {
 .test-class {
   white-space: nowrap;
 }
+
+Link {
+  background-color: red;
+}
