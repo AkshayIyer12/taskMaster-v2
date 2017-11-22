@@ -1,8 +1,7 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import IndividualTask from './IndividualTask'
-// import NewTask from './NewTask'
-import { Link } from 'react-router-dom' // Switch, Route,
+import { Link } from 'react-router-dom'
 
 class Tasks extends Component {
 
@@ -20,7 +19,7 @@ class Tasks extends Component {
         <ul>
           {
             this.props.value.map(current =>
-              <IndividualTask key={current._id} currentTask={current} onChange={this.props.onChange} />
+              <IndividualTask key={current._id} currentTask={current} onChange={this.props.onChange} getDetails={this.props.getDetails} />
             )
           }
         </ul>
@@ -37,6 +36,7 @@ class TaskListAndForm extends Component {
       taskList: []
     }
   }
+
 
   loadData() {
     axios.get(`http://localhost:3000/tasks`)
@@ -56,6 +56,7 @@ class TaskListAndForm extends Component {
   }
 
   componentDidMount() {
+    console.log('component mounted tasklistandform')
     this.loadData()
   }
 
@@ -64,11 +65,17 @@ class TaskListAndForm extends Component {
     this.loadData()
   }
 
+  getDetails (id) {
+    // console.log('::::', id)
+    this.props.history.push(`/task/${id}`)
+  }
+
   render() {
+    
     return (
       <div>
         <AddTaskLink />
-        <Tasks value={this.state.taskList} onChange={this.onChange.bind(this)} />
+        <Tasks value={this.state.taskList} onChange={this.onChange.bind(this)} getDetails={this.getDetails.bind(this)}/>
       </div>
     )
   }

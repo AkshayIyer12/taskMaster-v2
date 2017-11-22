@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'; // Route
+import { Link } from 'react-router-dom'
 import './App.css'
 
 class IndividualTask extends Component {
@@ -51,33 +51,19 @@ class IndividualTask extends Component {
   
   clickTask () {
     console.log('clicked on task', this.props.currentTask._id)
-    // this.props.history.push('/red')
-    // console.log(this.context.history)
+    this.props.getDetails(this.props.currentTask._id)
   }
 
   render() {
-    // console.log(this.context)
     const id = this.props.currentTask._id
     return (
-      <li key={this.props.id} className='task-list' onClick={this.clickTask.bind(this)}>
-        <span className='field task-name'>{this.state.currentTaskInfo.taskName}</span>
-        <span className='field assign-to'>{this.props.currentTask.assignTo}</span>
-        <span className='field du2e-date'>{this.props.currentTask.dueDate}</span>
-        <span className='field desc'>{this.props.currentTask.desc}</span>
-        {/* <Link to={`/task/${id}`} id={id}>edit</Link> */}
-        <ShowDetails to={`/task/${id}`} id={id} />
+      <li key={this.props.id} className='task-list'>
+        <span className='field task-name' onClick={this.clickTask.bind(this)}>{this.state.currentTaskInfo.taskName}</span>
+        <span className='field assign-to' onClick={this.clickTask.bind(this)}>{this.props.currentTask.assignTo}</span>
+        <span className='field du2e-date' onClick={this.clickTask.bind(this)}>{this.props.currentTask.dueDate}</span>
+        <span className='field desc' onClick={this.clickTask.bind(this)}>{this.props.currentTask.desc}</span>
         <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
       </li>
-    )
-  }
-}
-
-class ShowDetails extends Component {
-  render () {
-    return (
-    <button>
-      <Link to={this.props.to} id={this.props.id}>Details</Link>
-    </button>
     )
   }
 }
