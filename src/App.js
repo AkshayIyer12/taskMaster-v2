@@ -6,6 +6,7 @@ import TaskForm from './TaskForm'
 import RenderTask from './RenderTask'
 import CurrentTask from './CurrentTask'
 
+
 class Tasks extends Component {
 
   constructor(props) {
@@ -99,11 +100,11 @@ class Header extends Component {
     return (
       <header>
         <nav>
-          <ul>
-            <li><Link to='/'>Home</Link></li>
-            <li><Link to='/logIn'>Log In</Link></li>
-            <li><Link to='/taskListAndForm'>Tasks</Link></li>
-            <li><Link to='/task/:taskid'>Current Task</Link></li>
+          <ul className='nav-bar'>
+            <li className="nav-list"><Link to='/'>Home</Link></li>
+            <li className="nav-list"><Link to='/logIn'>Log In</Link></li>
+            <li className="nav-list"><Link to='/taskListAndForm'>Tasks</Link></li>
+            <li className="nav-list"><Link to='/task/:taskid'>Current Task</Link></li>
           </ul>
         </nav>
       </header>

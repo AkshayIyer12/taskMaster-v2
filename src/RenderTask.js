@@ -53,10 +53,16 @@ class RenderTask extends Component {
     console.log('show details')
 
   }
+  
+  clickTask () {
+    console.log('clicked on task', this.props.currentTask._id)
+    // this.props.history.push('/red')
+    console.log(this)
+  }
   render() {
     const id = this.props.currentTask._id
         return (
-          <li key={this.props.id} className='task-list'>
+          <li key={this.props.id} className='task-list' onClick={this.clickTask.bind(this)}>
             <span className='field task-name' onClick={this.showDetails.bind(this)}>{this.state.currentTaskInfo.taskName}</span>
             <span className='field assign-to'>{this.props.currentTask.assignTo}</span>
             <span className='field du2e-date'>{this.props.currentTask.dueDate}</span>
