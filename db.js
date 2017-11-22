@@ -129,9 +129,9 @@ const checkUser = (emailId, cb) => {
   db.collection('collector').find({emailId: emailId})
   .toArray((err, value) => {
     if (err) {
-      cb(err)
+      cb(err || new Error('Wrong Parameters'))
     } else if (value.length === 1) {
-      cb(null, true)
+      cb(null, value)
     } else {
       cb(null, false)
     }
@@ -140,8 +140,10 @@ const checkUser = (emailId, cb) => {
 
 const checkAndAddUser = (user, cb) => {
   checkUser(user.emailId, (err, value) => {
-    if (err || value) {
-      cb(err || new Error('User already exists!'))
+    if (err) {
+      cb(err)
+    } else if (value.length === 1) {
+      cb(null, value[0]._id)
     } else {
       db.collection('collector').insertOne(user, (err, val) => {
         if (err !== null || val.result['n'] === 0) {
