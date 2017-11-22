@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import './App.css'
 
 class IndividualTask extends Component {
@@ -55,7 +55,6 @@ class IndividualTask extends Component {
   }
 
   render() {
-    const id = this.props.currentTask._id
     return (
       <li key={this.props.id} className='task-list'>
         <span className='field task-name' onClick={this.clickTask.bind(this)}>{this.state.currentTaskInfo.taskName}</span>

@@ -4,7 +4,7 @@ import './App.css'
 import TaskDetails from './TaskDetails'
 import TaskListAndForm from'./TaskListAndForm'
 import NewTask from './NewTask'
-
+import LogIn from './LogIn'
 class App extends Component {
 
   constructor(props) {
@@ -52,17 +52,6 @@ class Main extends Component {
         <Route path='/newtask' component={NewTask}/>
       </Switch>
       </main>
-    )
-  }
-}
-
-class LogIn extends Component {
-  
-  render () {
-    return (
-      <div>
-        log in
-      </div>
     )
   }
 }
