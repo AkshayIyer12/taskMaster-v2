@@ -1,25 +1,21 @@
  const express = require('express')
  const cors = require('cors')
  const app = express()
+ const path = require('path')
  const passport = require('passport')
  const auth = require('./auth')
- const cookieParser = require('cookie-parser')
- const cookieSession = require('cookie-session')
  const bodyParser = require('body-parser')
  const route = require('./routes')
  const db = require('./db')
  const PORT = process.env.PORT || 3000
+ const session = require('express-session')
 
- app.use(express.static('public'))
+ // app.use(express.static('public'))
  app.use(cors())
+ app.use(session({ secret: '5a150a5add703325bcffc6c9' }))
  app.use(passport.initialize())
  app.use(passport.session())
  auth(passport)
- app.use(cookieParser())
- app.use(cookieSession({
-   name: 'session',
-   keys: ['123']
- }))
  app.use(bodyParser.json())
  app.use(bodyParser.urlencoded({
    extended: false
@@ -212,18 +208,40 @@
      emailId: req.user.profile.emails[0].value,
      type: 'user'
    }
-   let token = req.user.token
    db.checkAndAddUser(user, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
      } else {
-       res.cookie('token', token)
        res.json({
          'status': 'success',
          'data': value
        })
      }
    })
+ })
+
+ app.get(route.login, (req, res) => {
+   res.sendFile(path.join(__dirname, 'public', 'login.html'))
+ })
+
+ app.get('/', function (req, res) {
+   var html = `<ul>\
+    <li><a href='/auth/google'>Google</a></li>\
+    <li><a href='/logout'>logout</a></li>\
+  </ul>`
+
+   if (req.isAuthenticated()) {
+     html += '<p>authenticated as user:</p>'
+     html += '<pre>' + JSON.stringify(req.user, null, 4) + '</pre>'
+   }
+
+   res.send(html)
+ })
+
+ app.get('/logout', function (req, res) {
+   console.log('logging out')
+   req.logout()
+   res.redirect('/')
  })
 
  app.listen(PORT, () => {
