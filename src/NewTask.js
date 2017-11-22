@@ -1,4 +1,3 @@
-import { Switch, Route, Link } from 'react-router-dom'
 import React, { Component } from 'react'
 import axios from 'axios'
 
@@ -28,11 +27,7 @@ class NewTask extends Component {
         if (res.data.status === 'success') {
           console.log('Task added to DB - ', taskName)
           // re-Render allTasks
-          // this.props.onChange()
-
-          const state = this.state
-          state.showForm = false
-          this.setState(state)
+          this.props.history.push('/taskListAndForm')
         }
         else {
           // handle error
@@ -42,13 +37,12 @@ class NewTask extends Component {
   }
 
   onSubmit = (e) => {
-    console.log('Submitted')
-    if((this.state.taskName === '') || (this.state.assignTo === '')
-      || (this.state.dueDate === '') || (this.state.desc === '')) {
-      console.log('empty fields!')
-      
-    }
     e.preventDefault()
+    console.log('Submitted')
+    if((this.state.taskName === '') && (this.state.assignTo === '')
+      && (this.state.dueDate === '') && (this.state.desc === '')) {
+      console.log('empty fields!')
+    }
     // check validity
     this.addTask()
   }

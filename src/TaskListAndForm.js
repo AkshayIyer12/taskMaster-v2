@@ -1,9 +1,8 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import IndividualTask from './IndividualTask'
-import NewTaskForm from './NewTaskForm'
-import NewTask from './NewTask'
-import { Switch, Route, Link } from 'react-router-dom'
+// import NewTask from './NewTask'
+import { Link } from 'react-router-dom' // Switch, Route,
 
 class Tasks extends Component {
 
@@ -68,9 +67,7 @@ class TaskListAndForm extends Component {
   render() {
     return (
       <div>
-        {/* <NewTask /> */}
         <AddTaskLink />
-        {/* <NewTaskForm onChange={this.onChange.bind(this)} /> */}
         <Tasks value={this.state.taskList} onChange={this.onChange.bind(this)} />
       </div>
     )
@@ -84,4 +81,5 @@ class AddTaskLink extends Component {
     )
   }
 }
+
 export default TaskListAndForm
