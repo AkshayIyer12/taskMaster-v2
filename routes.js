@@ -10,7 +10,8 @@ const routes = {
   createUser: '/user',
   updateUser: '/user/:userId',
   displayUserTasks: '/tasks/:userId',
-  login: '/login'
+  authGoogle: '/auth/google',
+  callbackRoute: '/auth/google/callback'
 }
 
 module.exports = routes

@@ -1,6 +1,10 @@
  const express = require('express')
  const cors = require('cors')
  const app = express()
+ const passport = require('passport')
+ const auth = require('./auth')
+ const cookieParser = require('cookie-parser')
+ const cookieSession = require('cookie-session')
  const bodyParser = require('body-parser')
  const route = require('./routes')
  const db = require('./db')
@@ -8,6 +12,14 @@
 
  app.use(express.static('public'))
  app.use(cors())
+ app.use(passport.initialize())
+ app.use(passport.session())
+ auth(passport)
+ app.use(cookieParser())
+ app.use(cookieSession({
+   name: 'session',
+   keys: ['123']
+ }))
  app.use(bodyParser.json())
  app.use(bodyParser.urlencoded({
    extended: false
@@ -188,11 +200,24 @@
    })
  })
 
- app.post(route.login, (req, res) => {
-   db.autheticateUser(req.body, (err, value) => {
+ app.get(route.authGoogle, passport.authenticate('google', {
+   scope: `https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile`
+ }))
+
+ app.get(route.callbackRoute, passport.authenticate('google', {
+   failureRedirect: '/failure.html'
+ }), (req, res) => {
+   let user = {
+     userName: req.user.profile.displayName,
+     emailId: req.user.profile.emails[0].value,
+     type: 'user'
+   }
+   let token = req.user.token
+   db.checkAndAddUser(user, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
      } else {
+       res.cookie('token', token)
        res.json({
          'status': 'success',
          'data': value

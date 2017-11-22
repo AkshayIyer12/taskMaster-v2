@@ -23,8 +23,9 @@
 * Node.js
 * MongoDB
 * React
+* OAuth 2.0
 
-## What modules are used?
+## What dependencies are used?
 * express
 * body-parser
 * path
@@ -35,6 +36,11 @@
 * nodemon
 * standardjs
 * mongodb
+* axios
+* cookie-parser
+* cookie-session
+* passport
+* passport-google-oauth
 
 ### How to file an issue, if you feel something is wrong ?
 * Go to the [issues](https://github.com/anirudhbs/taskMaster-v2/issues) section of this project.
