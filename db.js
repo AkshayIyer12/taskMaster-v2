@@ -29,7 +29,7 @@ const getTaskById = (taskId, cb) => {
       if (err || value === null) {
         cb(err || new Error('Cannot find the id'))
       } else {
-        if ('type' in value[0]) {
+        if (value[0].hasOwnProperty('type')) {
           delete value[0].type
         }
         cb(null, value[0])
@@ -97,8 +97,7 @@ const getUserById = (userId, cb) => {
       if (err !== null || value.length === 0) {
         cb(err || new Error('Cannot find the user id'))
       } else {
-        if ('password' in value[0] || 'type' in value[0]) {
-          delete value[0].password
+        if (value[0].hasOwnProperty('type')) {
           delete value[0].type
         }
         cb(null, value[0])
@@ -113,7 +112,6 @@ const deleteUserById = (userId, cb) => {
   if (ObjectId.isValid(userId)) {
     let userID = new ObjectId(userId)
     db.collection('collector').deleteOne({_id: userID}, (err, value) => {
-      console.log(err, value)
       if (err !== null || value.result['n'] === 0) {
         cb(err || new Error('Cannot find the user id'))
       } else {
