@@ -71,7 +71,8 @@ class TaskForm extends Component {
     const { taskName, assignTo, dueDate, desc } = this.state
     if(this.state.showForm) {
       return (
-        <div>
+        <div className='edit-form'>
+            <h2>Add task</h2>
             <label>Name:<input type='text' name='taskName' value={taskName} onChange={this.onChange} /></label>
             <label>Assign to:<input type='text' name='assignTo' value={assignTo} onChange={this.onChange} /></label>
             <label>Due Date:<input type='text' name='dueDate' value={dueDate} onChange={this.onChange} /></label>
@@ -82,7 +83,8 @@ class TaskForm extends Component {
       )
     } else {
       return (
-        <div>
+        <div className='edit-form'>
+          <h2>Add task</h2>
           <button onClick={this.showForm.bind(this)}>+</button>
         </div>
       )
