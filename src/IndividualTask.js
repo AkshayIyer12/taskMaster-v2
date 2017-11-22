@@ -50,7 +50,7 @@ class IndividualTask extends Component {
   }
   
   clickTask () {
-    console.log('clicked on task', this.props.currentTask._id)
+    // console.log('clicked on task', this.props.currentTask._id)
     this.props.getDetails(this.props.currentTask._id)
   }
 
@@ -59,7 +59,7 @@ class IndividualTask extends Component {
       <li key={this.props.id} className='task-list'>
         <span className='field task-name' onClick={this.clickTask.bind(this)}>{this.state.currentTaskInfo.taskName}</span>
         <span className='field assign-to' onClick={this.clickTask.bind(this)}>{this.props.currentTask.assignTo}</span>
-        <span className='field du2e-date' onClick={this.clickTask.bind(this)}>{this.props.currentTask.dueDate}</span>
+        <span className='field due-date' onClick={this.clickTask.bind(this)}>{this.props.currentTask.dueDate}</span>
         <span className='field desc' onClick={this.clickTask.bind(this)}>{this.props.currentTask.desc}</span>
         <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
       </li>
