@@ -66,7 +66,6 @@ class TaskListAndForm extends Component {
   }
 
   getDetails (id) {
-    // console.log('::::', id)
     this.props.history.push(`/task/${id}`)
   }
 
