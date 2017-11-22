@@ -11,7 +11,8 @@ const routes = {
   updateUser: '/user/:userId',
   displayUserTasks: '/tasks/:userId',
   authGoogle: '/auth/google',
-  callbackRoute: '/auth/google/callback'
+  callbackRoute: '/auth/google/callback',
+  login: '/login'
 }
 
 module.exports = routes
