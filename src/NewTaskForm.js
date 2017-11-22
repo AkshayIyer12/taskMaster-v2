@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 
-class TaskForm extends Component {
+class NewTaskForm extends Component {
   
   constructor() {
     super()
@@ -92,5 +92,5 @@ class TaskForm extends Component {
   }
 }
 
-export default TaskForm
+export default NewTaskForm
   

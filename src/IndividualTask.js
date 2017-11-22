@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'; // Route
 import './App.css'
 
-class RenderTask extends Component {
+class IndividualTask extends Component {
   
   constructor(props) {
     super(props)
@@ -68,14 +68,14 @@ class RenderTask extends Component {
             <span className='field du2e-date'>{this.props.currentTask.dueDate}</span>
             <span className='field desc'>{this.props.currentTask.desc}</span>
             {/* <Link to={`/task/${id}`} id={id}>edit</Link> */}
-            <LinkMe to={`/task/${id}`} id={id} />
+            <ShowDetails to={`/task/${id}`} id={id} />
             <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
           </li>
         )
   }
 }
 
-class LinkMe extends Component {
+class ShowDetails extends Component {
   render () {
     return (
     <button>
@@ -84,4 +84,5 @@ class LinkMe extends Component {
     )
   }
 }
-export default RenderTask
+
+export default IndividualTask

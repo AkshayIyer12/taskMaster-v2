@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Switch, Route, Link } from 'react-router-dom'
 import './App.css'
-import TaskForm from './TaskForm'
-import RenderTask from './RenderTask'
-import CurrentTask from './CurrentTask'
+import NewTaskForm from './NewTaskForm'
+import IndividualTask from './IndividualTask'
+import TaskDetails from './TaskDetails'
 
 
 class Tasks extends Component {
@@ -23,7 +23,7 @@ class Tasks extends Component {
         <ul>
           {
             this.props.value.map(current =>
-              <RenderTask key={current._id} currentTask={current} onChange={this.props.onChange} />
+              <IndividualTask key={current._id} currentTask={current} onChange={this.props.onChange} />
             )
           }
         </ul>
@@ -70,7 +70,7 @@ class TaskListAndForm extends Component {
   render() {
     return (
       <div>
-        <TaskForm onChange={this.onChange.bind(this)} />
+        <NewTaskForm onChange={this.onChange.bind(this)} />
         <Tasks value={this.state.taskList} onChange={this.onChange.bind(this)} />
       </div>
     )
@@ -120,7 +120,7 @@ class Main extends Component {
         <Route exact path='/' component={Home}/>
         <Route path='/LogIn' component={LogIn}/>
         <Route path='/taskListAndForm' component={TaskListAndForm}/>
-        <Route path='/task/:taskid' component={CurrentTask}/>
+        <Route path='/task/:taskid' component={TaskDetails}/>
       </Switch>
       </main>
     )

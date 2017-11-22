@@ -30,6 +30,7 @@
     "cookie-session": "^2.0.0-beta.3",
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "material-ui": "^0.19.4",
     "mongodb": "^2.2.33",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
