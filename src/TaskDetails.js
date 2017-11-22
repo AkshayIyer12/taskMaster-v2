@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
-class CurrentTask extends Component {
+class TaskDetails extends Component {
   
   constructor(props) {
     super(props)
@@ -128,4 +128,4 @@ class GoToMainPage extends Component {
   }
 }
 
-export default CurrentTask
+export default TaskDetails

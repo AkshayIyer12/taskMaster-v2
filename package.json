@@ -29,6 +29,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
+    "material-ui": "^0.19.4",
     "mongodb": "^2.2.33",
     "passport": "^0.4.0",
     "passport-google-oauth": "^1.0.0",
