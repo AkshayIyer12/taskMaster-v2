@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import LogIn from './LogIn'
 import Home from './Home'
-import TaskListAndForm from'./TaskListAndForm'
+import TaskList from'./TaskList'
 import TaskDetails from './TaskDetails'
 import NewTask from './NewTask'
 
@@ -27,18 +27,18 @@ class Main extends Component {
       <LogIn onStoreUserId={this.storeUserId.bind(this)} />
     );
 
-    const TaskListAndFormWithProps = () => {
-      console.log('id is', this.state.id)
-      return (
-      <TaskListAndForm userID={this.state.id} />
-    )}
+    // const TaskListAndFormWithProps = () => {
+    //   console.log('id is', this.state.id)
+    //   return (
+    //   <TaskListAndForm userID={this.state.id} />
+    // )}
 
     return (
       // <main>
       <Switch>
         <Route exact path='/' component={Home}/>
         <Route path='/LogIn' render={LogInWithProps}/>
-        <Route path='/taskListAndForm' component={TaskListAndForm}/>
+        <Route path='/taskListAndForm' component={TaskList}/>
         {/* <Route path='/taskListAndForm' render={TaskListAndFormWithProps}/> */}
         <Route path='/task/:taskid' component={TaskDetails}/>
         <Route path='/newtask' component={NewTask}/>
