@@ -83,9 +83,9 @@ class TaskDetails extends Component {
   }
 
   goBack () {
-    console.log('go back')
-
+    this.props.history.push('/taskListAndForm')
   }
+
   render () {
     if(!this.state.editModeFlag) {    
       return (
@@ -97,7 +97,7 @@ class TaskDetails extends Component {
           <div>Description: {this.state.currentTaskInfo.desc}</div>
           <div>
             <button onClick={this.editMode.bind(this)}>Edit</button>
-            <GoToMainPage to={'/taskListAndForm'} />
+            <button onClick={this.goBack.bind(this)}>Back</button>
           </div>
         </div>
       )
@@ -115,16 +115,6 @@ class TaskDetails extends Component {
         </div>
       )
     }
-  }
-}
-
-class GoToMainPage extends Component {
-  render () {
-    return (
-    <button>
-      <Link to={this.props.to}>Back</Link>
-    </button>
-    )
   }
 }
 
