@@ -5,7 +5,7 @@ let db = {}
 
 client.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/taskMaster-v2', (err, database) => {
   if (err) {
-    throw new Error('Connection could not be established')
+    throw new Error('Connection could not be established with MONGO_DB')
   } else {
     console.log('Server has started successfully')
     db = database
@@ -161,7 +161,8 @@ const addUser = (user, cb) => {
     if (err !== null || val.result['n'] === 0) {
       cb(err || new Error('Adding user failed'))
     } else {
-      cb(null, val.insertedId)
+      let id = val.insertedId.toHexString()
+      cb(null, id)
     }
   })
 }
