@@ -29,7 +29,7 @@ class Tasks extends Component {
   }
 }
 
-class TaskListAndForm extends Component {
+class TaskList extends Component {
 
   constructor(props) {
     super(props)
@@ -89,4 +89,4 @@ class AddTaskLink extends Component {
   }
 }
 
-export default TaskListAndForm
+export default TaskList

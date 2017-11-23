@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 
 class TaskDetails extends Component {
   
@@ -83,9 +82,9 @@ class TaskDetails extends Component {
   }
 
   goBack () {
-    console.log('go back')
-
+    this.props.history.push('/taskListAndForm')
   }
+
   render () {
     if(!this.state.editModeFlag) {    
       return (
@@ -97,7 +96,7 @@ class TaskDetails extends Component {
           <div>Description: {this.state.currentTaskInfo.desc}</div>
           <div>
             <button onClick={this.editMode.bind(this)}>Edit</button>
-            <GoToMainPage to={'/taskListAndForm'} />
+            <button onClick={this.goBack.bind(this)}>Back</button>
           </div>
         </div>
       )
@@ -108,23 +107,14 @@ class TaskDetails extends Component {
           <h1>Edit task</h1>
           <label>Name: <input type='text' name='taskName' value={taskName} onChange={this.onChange} placeholder='Name' /></label><br/>
           <label>Assign To: <input type='text' name='assignTo' value={assignTo} onChange={this.onChange} placeholder='Assign to' /></label><br/>
-          <label>Due Date: <input type='text' name='dueDate' value={dueDate} onChange={this.onChange} placeholder='Due Date' /></label><br/>
+          {/* <label>Due Date: <input type='text' name='dueDate' value={dueDate} onChange={this.onChange} placeholder='Due Date' /></label><br/> */}
+          <label>Due Date:<input type='date' name='dueDate' value={dueDate} onChange={this.onChange} /></label>
           <label>Description: <input type='textarea' name='desc' value={desc} onChange={this.onChange} placeholder='Description' /></label><br/>
           <button onClick={this.onSubmit.bind(this)}>Update</button>
           <button onClick={this.onCancel.bind(this)}>Cancel</button>
         </div>
       )
     }
-  }
-}
-
-class GoToMainPage extends Component {
-  render () {
-    return (
-    <button>
-      <Link to={this.props.to}>Back</Link>
-    </button>
-    )
   }
 }
 

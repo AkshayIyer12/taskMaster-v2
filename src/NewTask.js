@@ -39,11 +39,17 @@ class NewTask extends Component {
   onSubmit = (e) => {
     e.preventDefault()
     console.log('Submitted')
-    if((this.state.taskName === '') && (this.state.assignTo === '')
-      && (this.state.dueDate === '') && (this.state.desc === '')) {
-      console.log('empty fields!')
-    }
     // check validity
+    const fieldNames = Object.keys(this.state)
+    console.log(fieldNames)
+    const flag = fieldNames.reduce(currentField => {
+      console.log(currentField)
+      if(this.state[currentField] === '') return false
+      return true
+    })
+    console.log('flag is', flag)
+    if(this.state.taskName === '' || this.state.assignTo === '' ||
+    this.state.dueDate === '' || this.state.desc === '') console.log('empty')
     this.addTask()
   }
 
@@ -59,7 +65,8 @@ class NewTask extends Component {
         <h2>New task</h2>
         <label>Name:<input type='text' name='taskName' value={taskName} onChange={this.onChange} /></label>
         <label>Assign to:<input type='text' name='assignTo' value={assignTo} onChange={this.onChange} /></label>
-        <label>Due Date:<input type='text' name='dueDate' value={dueDate} onChange={this.onChange} /></label>
+        {/* <label>Due Date:<input type='text' name='dueDate' value={dueDate} onChange={this.onChange} /></label> */}
+        <label>Due Date:<input type='date' name='dueDate' value={dueDate} onChange={this.onChange} /></label>
         <label>Description:<input type='textarea' name='desc' value={desc} onChange={this.onChange} /></label>
         <button onClick={this.onSubmit}>Submit</button>
         <button onClick={this.onCancel.bind(this)}>Cancel</button>
