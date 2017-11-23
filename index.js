@@ -10,7 +10,6 @@
  const PORT = process.env.PORT || 3000
  const session = require('express-session')
 
- // app.use(express.static('public'))
  app.use(cors())
  app.use(session({ secret: '5a150a5add703325bcffc6c9' }))
  app.use(passport.initialize())
@@ -124,7 +123,8 @@
      } else {
        res.json({
          'status': 'success',
-         'data': value})
+         'data': value
+       })
      }
    })
  })
