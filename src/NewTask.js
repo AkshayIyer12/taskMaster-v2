@@ -51,7 +51,7 @@ class NewTask extends Component {
         if (res.data.status === 'success') {
           console.log('Task added to DB - ', taskName)
           // re-Render allTasks
-          this.props.history.push('/taskListAndForm')
+          this.props.history.push('/taskList')
         }
         else {
           // handle error
@@ -69,7 +69,7 @@ class NewTask extends Component {
 
   onCancel () {
     console.log(this.props.history)
-    this.props.history.push('/taskListAndForm')
+    this.props.history.push('/taskList')
   }
 
   componentDidMount () {
@@ -88,7 +88,7 @@ class NewTask extends Component {
         <label>Assign To:<select name='assignTo' value={this.state.assignTo} onChange={this.onChange} selected=''>
           <option value='placeholder'></option>
             {this.state.userList.map(currentUser => 
-              <option value={currentUser}>{currentUser}</option>
+              <option key={currentUser} value={currentUser}>{currentUser}</option>
             )}
           </select>
         </label>

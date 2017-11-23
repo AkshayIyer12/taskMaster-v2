@@ -99,7 +99,7 @@ class TaskDetails extends Component {
   }
 
   goBack () {
-    this.props.history.push('/taskListAndForm')
+    this.props.history.push('/taskList')
   }
 
   render () {
@@ -126,7 +126,7 @@ class TaskDetails extends Component {
           <label>Assign To:<select name='assignTo' value={this.state.assignTo} onChange={this.onChange} selected={this.state.currentTaskInfo.assignTo}>
           <option value='placeholder'></option>
             {this.state.userList.map(currentUser => 
-              <option value={currentUser}>{currentUser}</option>
+              <option key={currentUser} value={currentUser}>{currentUser}</option>
             )}
             </select>
           </label>
