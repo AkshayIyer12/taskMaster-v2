@@ -70,7 +70,7 @@ class TaskList extends Component {
       .then(res => {
         console.log('user tasks:', res.data)
         if (res.data.status !== 'success') {
-          // console.log(res.data.data)
+          console.log('error getting tasks')
           // handle Error
         } else {
           

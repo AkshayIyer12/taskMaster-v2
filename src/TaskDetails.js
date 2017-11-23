@@ -123,13 +123,13 @@ class TaskDetails extends Component {
         <div className='edit-form'>
           <h1>Edit task</h1>
           <label>Name: <input type='text' name='taskName' value={taskName} onChange={this.onChange} placeholder='Name' /></label><br/>
-          <label>Assign To:<select name='assignTo' value={this.state.assignTo} onChange={this.onChange} selected={this.state.currentTaskInfo.assignTo}>
+          {/* <label>Assign To:<select name='assignTo' value={this.state.assignTo} onChange={this.onChange} selected={this.state.currentTaskInfo.assignTo} disabled>
           <option value='placeholder'></option>
             {this.state.userList.map(currentUser => 
               <option key={currentUser} value={currentUser}>{currentUser}</option>
             )}
             </select>
-          </label>
+          </label> */}
           <label>Due Date:<input type='date' name='dueDate' value={dueDate} onChange={this.onChange} /></label>
           <label>Description: <input type='textarea' name='desc' value={desc} onChange={this.onChange} placeholder='Description' /></label><br/>
           <button onClick={this.onSubmit.bind(this)}>Update</button>

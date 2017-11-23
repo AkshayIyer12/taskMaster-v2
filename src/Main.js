@@ -36,7 +36,7 @@ class Main extends Component {
     return (
       // <main>
       <Switch>
-        <Route exact path='/' component={Home}/>
+        <Route exact path='/' component={TaskList}/>
         <Route path='/LogIn' render={LogInWithProps}/>
         <Route path='/taskList' component={TaskList}/>
         {/* <Route path='/taskList' render={TaskListAndFormWithProps}/> */}
