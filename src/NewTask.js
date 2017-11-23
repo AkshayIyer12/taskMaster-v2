@@ -9,6 +9,7 @@ class NewTask extends Component {
       userList: [],
       taskName: '',
       assignTo: '',
+      assignToName: 'placeholder',
       dueDate: this.getDate(),
       desc: ''
     }
@@ -62,8 +63,9 @@ class NewTask extends Component {
   }
 
   onSubmit = (e) => {
-    console.log('assignto', this.state.assignTo)
+    // console.log('assignto', this.state.assignTo)
     e.preventDefault()
+    
     console.log('Submitted')
     this.addTask()
   }
@@ -75,6 +77,13 @@ class NewTask extends Component {
 
   componentDidMount () {
     this.getUserList()
+  }
+
+  setAssignName () {
+    console.log('setAssignName')
+    const state = this.state
+    state.assignToName =  ''
+    
   }
 
   render () {

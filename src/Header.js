@@ -13,6 +13,7 @@ class Header extends Component {
             {/* <li className="nav-list"><Link to='/logIn'>Log In</Link></li> */}
             <li className="nav-list"><Link to='/taskList'>Tasks</Link></li>
             {/* <li className="nav-list"><Link to='/task/:taskid'>Current Task</Link></li> */}
+            <li className="nav-list"><Link to='/logout'>Log Out</Link></li>
           </ul>
         </nav>
       </header>

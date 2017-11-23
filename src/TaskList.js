@@ -80,9 +80,9 @@ class TaskList extends Component {
           this.setState({
             taskList, taskList2
           })
-          console.log('1', this.state.taskList)
-          console.log('2', taskList2)
-          console.log('2', this.state.taskList2)
+          // console.log('1', this.state.taskList)
+          // console.log('2', taskList2)
+          // console.log('2', this.state.taskList2)
         }
       })
   }
