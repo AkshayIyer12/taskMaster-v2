@@ -9,6 +9,7 @@ const routes = {
   deleteUser: '/user',
   createUser: '/user',
   updateUser: '/user',
+  getUser: '/user/:userId',
   displayUserTasks: '/userTasks',
   authGoogle: '/auth/google',
   callbackRoute: '/auth/google/callback',
