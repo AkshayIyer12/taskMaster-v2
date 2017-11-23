@@ -6,9 +6,10 @@ class NewTask extends Component {
   constructor() {
     super()
     this.state = {
+      userList: [],
       taskName: '',
       assignTo: '',
-      dueDate: '',
+      dueDate: this.getDate(),
       desc: ''
     }
   }
@@ -18,8 +19,32 @@ class NewTask extends Component {
     state[e.target.name] = e.target.value
     this.setState(state)
   }
+
+  getDate() {
+    const today = new Date()
+    const day = today.getDate(),
+      month = today.getMonth() + 1,
+      year = today.getFullYear()
+    return (year + '-' + month + '-' + day)
+  }
   
-  addTask() {
+  getUserList () {
+    console.log('getusers')
+    axios.get('http://localhost:3000/users')
+    .then((res) => {
+      if(res.data.status !== 'success') {
+        // handle error
+      } else {
+        const userList = res.data.data.map(currentUser => currentUser.userName)
+        const state = this.state
+        state.userList = userList
+        this.setState(state)
+        console.log(this.state.userList)
+      }
+    })
+  }
+
+  addTask () {
     const { taskName, assignTo, dueDate, desc } = this.state
     axios.post('http://localhost:3000/task', { taskName, assignTo, dueDate, desc })
       .then((res) => {
@@ -37,19 +62,11 @@ class NewTask extends Component {
   }
 
   onSubmit = (e) => {
+    console.log('assignto', this.state.assignTo)
+    console.log('date', this.state.dueDate)
     e.preventDefault()
     console.log('Submitted')
     // check validity
-    const fieldNames = Object.keys(this.state)
-    console.log(fieldNames)
-    const flag = fieldNames.reduce(currentField => {
-      console.log(currentField)
-      if(this.state[currentField] === '') return false
-      return true
-    })
-    console.log('flag is', flag)
-    if(this.state.taskName === '' || this.state.assignTo === '' ||
-    this.state.dueDate === '' || this.state.desc === '') console.log('empty')
     this.addTask()
   }
 
@@ -58,14 +75,25 @@ class NewTask extends Component {
     this.props.history.push('/taskListAndForm')
   }
 
+  componentDidMount () {
+    this.getUserList()
+  }
+
   render () {
+    this.getUserList.bind(this)
+
+    this.getDate()
     const { taskName, assignTo, dueDate, desc } = this.state    
     return (
       <div className='edit-form'>
         <h2>New task</h2>
         <label>Name:<input type='text' name='taskName' value={taskName} onChange={this.onChange} /></label>
-        <label>Assign to:<input type='text' name='assignTo' value={assignTo} onChange={this.onChange} /></label>
-        {/* <label>Due Date:<input type='text' name='dueDate' value={dueDate} onChange={this.onChange} /></label> */}
+        <label>Assign To:<select name='assignTo' value={this.assignTo} onChange={this.onChange}>
+            {this.state.userList.map(currentUser => 
+              <option value={currentUser}>{currentUser}</option>
+            )}
+          </select>
+        </label>
         <label>Due Date:<input type='date' name='dueDate' value={dueDate} onChange={this.onChange} /></label>
         <label>Description:<input type='textarea' name='desc' value={desc} onChange={this.onChange} /></label>
         <button onClick={this.onSubmit}>Submit</button>
