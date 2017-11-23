@@ -10,11 +10,7 @@ class LogIn extends Component {
       if(i.startsWith(' userId')) id = i.slice(8).trim()
     }
 
-    // const state = this.state
-    // state.id = id
-    // this.setState(state)
-    console.log('id', id)
-    // console.log('login component id-', this.state.id)
+    // console.log('id in LogIn', id)
     this.props.onStoreUserId(id)
     // while(true){
     //   // window.open('http://localhost:3001/tasks')
@@ -26,7 +22,7 @@ class LogIn extends Component {
   }
   
   logOut () {
-    // console.log('logout')
+    console.log('logout')
     window.open('http://localhost:3000/logout', '_self')
   }
 

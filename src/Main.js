@@ -19,13 +19,19 @@ class Main extends Component {
       const state = this.state
       state.id = id
       this.setState(state)
-      console.log(this.state)
+      console.log('id in main component', this.state)
     }
   
   render () {
     const LogInWithProps = () => (
-      <LogIn onStoreUserId={this.storeUserId.bind(this)} id={this.state.id}/>
+      <LogIn onStoreUserId={this.storeUserId.bind(this)} />
     );
+
+    const TaskListAndFormWithProps = () => {
+      console.log('id is', this.state.id)
+      return (
+      <TaskListAndForm userID={this.state.id} />
+    )}
 
     return (
       // <main>
@@ -33,6 +39,7 @@ class Main extends Component {
         <Route exact path='/' component={Home}/>
         <Route path='/LogIn' render={LogInWithProps}/>
         <Route path='/taskListAndForm' component={TaskListAndForm}/>
+        {/* <Route path='/taskListAndForm' render={TaskListAndFormWithProps}/> */}
         <Route path='/task/:taskid' component={TaskDetails}/>
         <Route path='/newtask' component={NewTask}/>
       </Switch>

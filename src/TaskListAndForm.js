@@ -19,7 +19,8 @@ class Tasks extends Component {
         <ul>
           {
             this.props.value.map(current =>
-              <IndividualTask key={current._id} currentTask={current} onChange={this.props.onChange} getDetails={this.props.getDetails} />
+              <IndividualTask key={current._id} currentTask={current}
+                onChange={this.props.onChange} getDetails={this.props.getDetails} />
             )
           }
         </ul>
@@ -36,7 +37,6 @@ class TaskListAndForm extends Component {
       taskList: []
     }
   }
-
 
   loadData() {
     axios.get(`http://localhost:3000/tasks`)
@@ -57,6 +57,7 @@ class TaskListAndForm extends Component {
 
   componentDidMount() {
     console.log('component mounted tasklistandform')
+    console.log('id in tasklist', this.props)
     this.loadData()
   }
 
