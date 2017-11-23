@@ -10,7 +10,7 @@
  const PORT = process.env.PORT || 3000
  const session = require('express-session')
 
- app.use(express.static('build'))
+ // app.use(express.static('build'))
  app.use(cors())
  app.use(session({ secret: '5a150a5add703325bcffc6c9' }))
  app.use(passport.initialize())
@@ -118,7 +118,7 @@
  })
 
  app.get(route.user, (req, res) => {
-   db.getUserById(req.params.userId, (err, value) => {
+   db.getUserById(req.user.UserId, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
      } else {
@@ -131,7 +131,7 @@
  })
 
  app.delete(route.deleteUser, (req, res) => {
-   db.deleteUserById(req.params.userId, (err, value) => {
+   db.deleteUserById(req.user.UserId, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
      } else {
@@ -166,7 +166,7 @@
 
  app.put(route.updateUser, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
-     db.updateTask(req.params.userId, req.body, (err, value) => {
+     db.updateTask(req.user.UserId, req.body, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
        } else {
@@ -185,7 +185,7 @@
  })
 
  app.get(route.displayUserTasks, (req, res) => {
-   db.getTasksByUserId(req.params.userId, (err, value) => {
+   db.getTasksByUserId(req.user.UserId, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
      } else {
@@ -213,21 +213,21 @@
      if (err) {
        res.redirect('/login')
      } else {
-       res.cookie('userId', value, { encode: String })
+       req.session.passport.user.UserId = value
        res.redirect('/')
      }
    })
  })
 
  app.get(route.login, (req, res) => {
-   res.sendFile(path.join(__dirname, 'build', 'login.html'))
+   res.sendFile(path.join(__dirname, 'public', 'login.html'))
  })
 
  app.get('/', function (req, res) {
    if (req.isAuthenticated()) {
-     res.sendFile(path.join(__dirname, 'build', 'index.html'))
+     res.sendFile(path.join(__dirname, 'public', 'index.html'))
    } else {
-     res.sendFile(path.join(__dirname, 'build', 'login.html'))
+     res.sendFile(path.join(__dirname, 'public', 'login.html'))
    }
  })
 
