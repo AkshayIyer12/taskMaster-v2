@@ -1,10 +1,24 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+// import axios from 'axios'
 
 class LogIn extends Component {
 
+  componentDidMount() {
+    const cookieList = document.cookie.split(';')
+    let id = ''
+    for(let i of cookieList) {
+      if(i.startsWith(' userId')) id = i.slice(8).trim()
+    }
+
+    // console.log('id in LogIn', id)
+    this.props.onStoreUserId(id)
+    // while(true){
+    //   // window.open('http://localhost:3001/tasks')
+    // }
+  }
+  
   openGoogle() {
-    window.open('http://localhost:3000/auth/google', '_self')
+    window.open('http://localhost:3000/auth/google', '')
   }
   
   logOut () {
