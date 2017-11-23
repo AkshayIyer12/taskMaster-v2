@@ -185,27 +185,23 @@ const updateUser = (userId, user, cb) => {
 const getTasksByUserId = (userId, cb) => {
   if (ObjectId.isValid(userId)) {
     db.collection('collector').find({
-      $or: [ { assignTo: userId }, { assignBy: userId } ]
+      $or: [{ assignTo: userId }, { assignBy: userId }]
     }).toArray((err, value) => {
-      if (err === null) {
-        cb(err || new Error('Cannot find the task associated with id'))
-      } else {
-        let assignCategory = value.reduce((accum, task) => {
-          if (task === undefined) {
-            return accum
-          }
-          if (task.assignTo === userId) {
-            accum.assignTo.push(task)
-          } else {
-            accum.assignBy.push(task)
-          }
+      let assignCategory = value.reduce((accum, task) => {
+        if (task === undefined) {
           return accum
-        }, {
-          assignTo: [],
-          assignBy: []
-        })
-        cb(null, assignCategory)
-      }
+        }
+        if (task.assignTo === userId) {
+          accum.assignTo.push(task)
+        } else {
+          accum.assignBy.push(task)
+        }
+        return accum
+      }, {
+        assignTo: [],
+        assignBy: []
+      })
+      cb(null, assignCategory)
     })
   } else {
     cb(new Error('UserId is not valid'))
