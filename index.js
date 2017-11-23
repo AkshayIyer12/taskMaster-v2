@@ -10,7 +10,6 @@
  const PORT = process.env.PORT || 3000
  const session = require('express-session')
 
- // app.use(express.static('build'))
  app.use(cors())
  app.use(session({ secret: '5a150a5add703325bcffc6c9' }))
  app.use(passport.initialize())
@@ -118,29 +117,37 @@
  })
 
  app.get(route.user, (req, res) => {
-   db.getUserById(req.user.UserId, (err, value) => {
-     if (err) {
-       res.json({'status': 'error', 'message': err.message})
-     } else {
-       res.json({
-         'status': 'success',
-         'data': value
-       })
-     }
-   })
+   if (checkReqUser(req.user)) {
+     db.getUserById(req.user.UserId, (err, value) => {
+       if (err) {
+         res.json({ 'status': 'error', 'message': err.message })
+       } else {
+         res.json({
+           'status': 'success',
+           'data': value
+         })
+       }
+     })
+   } else {
+     res.redirect('/login')
+   }
  })
 
  app.delete(route.deleteUser, (req, res) => {
-   db.deleteUserById(req.user.UserId, (err, value) => {
-     if (err) {
-       res.json({'status': 'error', 'message': err.message})
-     } else {
-       res.json({
-         'status': 'success',
-         'data': value
-       })
-     }
-   })
+   if (checkReqUser(req.user)) {
+     db.deleteUserById(req.user.UserId, (err, value) => {
+       if (err) {
+         res.json({'status': 'error', 'message': err.message})
+       } else {
+         res.json({
+           'status': 'success',
+           'data': value
+         })
+       }
+     })
+   } else {
+     res.redirect('/login')
+   }
  })
 
  app.post(route.createUser, (req, res) => {
@@ -165,8 +172,40 @@
  })
 
  app.put(route.updateUser, (req, res) => {
-   if (Object.keys(req.body).length !== 0) {
-     db.updateTask(req.user.UserId, req.body, (err, value) => {
+   if (checkReqUser(req.user)) {
+     if (Object.keys(req.body).length !== 0) {
+       db.updateTask(req.user.UserId, req.body, (err, value) => {
+         if (err) {
+           res.json({'status': 'error', 'message': err.message})
+         } else {
+           res.json({
+             'status': 'success',
+             'data': value
+           })
+         }
+       })
+     } else {
+       res.json({
+         'status': 'error',
+         'message': 'Empty body'
+       })
+     }
+   } else {
+     res.redirect('/login')
+   }
+ })
+
+ const checkReqUser = (user) => {
+   if (user) {
+     return true
+   } else {
+     return false
+   }
+ }
+
+ app.get(route.displayUserTasks, (req, res) => {
+   if (checkReqUser(req.user)) {
+     db.getTasksByUserId(req.user.UserId, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
        } else {
@@ -177,24 +216,8 @@
        }
      })
    } else {
-     res.json({
-       'status': 'error',
-       'message': 'Empty body'
-     })
+     res.redirect('/login')
    }
- })
-
- app.get(route.displayUserTasks, (req, res) => {
-   db.getTasksByUserId(req.user.UserId, (err, value) => {
-     if (err) {
-       res.json({'status': 'error', 'message': err.message})
-     } else {
-       res.json({
-         'status': 'success',
-         'data': value
-       })
-     }
-   })
  })
 
  app.get(route.authGoogle, passport.authenticate('google', {
