@@ -29,7 +29,6 @@ class NewTask extends Component {
   }
   
   getUserList () {
-    console.log('getusers')
     axios.get('http://localhost:3000/users')
     .then((res) => {
       if(res.data.status !== 'success') {
@@ -39,7 +38,7 @@ class NewTask extends Component {
         const state = this.state
         state.userList = userList
         this.setState(state)
-        console.log(this.state.userList)
+        console.log('users:', this.state.userList)
       }
     })
   }
@@ -63,10 +62,8 @@ class NewTask extends Component {
 
   onSubmit = (e) => {
     console.log('assignto', this.state.assignTo)
-    console.log('date', this.state.dueDate)
     e.preventDefault()
     console.log('Submitted')
-    // check validity
     this.addTask()
   }
 
@@ -83,12 +80,13 @@ class NewTask extends Component {
     this.getUserList.bind(this)
 
     this.getDate()
-    const { taskName, assignTo, dueDate, desc } = this.state    
+    const { taskName, dueDate, desc } = this.state    
     return (
       <div className='edit-form'>
         <h2>New task</h2>
         <label>Name:<input type='text' name='taskName' value={taskName} onChange={this.onChange} /></label>
-        <label>Assign To:<select name='assignTo' value={this.assignTo} onChange={this.onChange}>
+        <label>Assign To:<select name='assignTo' value={this.state.assignTo} onChange={this.onChange} selected=''>
+          <option value='placeholder'></option>
             {this.state.userList.map(currentUser => 
               <option value={currentUser}>{currentUser}</option>
             )}
@@ -96,7 +94,7 @@ class NewTask extends Component {
         </label>
         <label>Due Date:<input type='date' name='dueDate' value={dueDate} onChange={this.onChange} /></label>
         <label>Description:<input type='textarea' name='desc' value={desc} onChange={this.onChange} /></label>
-        <button onClick={this.onSubmit}>Submit</button>
+        <button onClick={this.onSubmit.bind(this)}>Submit</button>
         <button onClick={this.onCancel.bind(this)}>Cancel</button>
       </div>
     )

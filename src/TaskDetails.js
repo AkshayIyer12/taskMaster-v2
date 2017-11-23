@@ -7,6 +7,7 @@ class TaskDetails extends Component {
     super(props)
     this.state = {
       editModeFlag: false,
+      userList: [],
       currentTaskInfo: {
         taskName: '',
         assignTo: '',
@@ -50,6 +51,21 @@ class TaskDetails extends Component {
     })
   }
 
+  getUserList () {
+    console.log('getusers')
+    axios.get('http://localhost:3000/users')
+    .then((res) => {
+      if(res.data.status !== 'success') {
+        // handle error
+      } else {
+        const userList = res.data.data.map(currentUser => currentUser.userName)
+        const state = this.state
+        state.userList = userList
+        this.setState(state)
+      }
+    })
+  }
+
   getTaskDetails() {
     axios.get(`http://localhost:3000${this.props.location.pathname}`)
     .then((res) => {
@@ -66,6 +82,7 @@ class TaskDetails extends Component {
 
   componentDidMount(){
     this.getTaskDetails()
+    this.getUserList()
   }
 
   editMode () {
@@ -101,13 +118,18 @@ class TaskDetails extends Component {
         </div>
       )
     } else {
-      const { taskName, assignTo, dueDate, desc } = this.state.currentTaskInfo
+      const { taskName, dueDate, desc } = this.state.currentTaskInfo
       return (
         <div className='edit-form'>
           <h1>Edit task</h1>
           <label>Name: <input type='text' name='taskName' value={taskName} onChange={this.onChange} placeholder='Name' /></label><br/>
-          <label>Assign To: <input type='text' name='assignTo' value={assignTo} onChange={this.onChange} placeholder='Assign to' /></label><br/>
-          {/* <label>Due Date: <input type='text' name='dueDate' value={dueDate} onChange={this.onChange} placeholder='Due Date' /></label><br/> */}
+          <label>Assign To:<select name='assignTo' value={this.state.assignTo} onChange={this.onChange} selected={this.state.currentTaskInfo.assignTo}>
+          <option value='placeholder'></option>
+            {this.state.userList.map(currentUser => 
+              <option value={currentUser}>{currentUser}</option>
+            )}
+            </select>
+          </label>
           <label>Due Date:<input type='date' name='dueDate' value={dueDate} onChange={this.onChange} /></label>
           <label>Description: <input type='textarea' name='desc' value={desc} onChange={this.onChange} placeholder='Description' /></label><br/>
           <button onClick={this.onSubmit.bind(this)}>Update</button>
