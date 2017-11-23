@@ -124,7 +124,8 @@
      } else {
        res.json({
          'status': 'success',
-         'data': value})
+         'data': value
+       })
      }
    })
  })
