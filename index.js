@@ -10,6 +10,7 @@
  const PORT = process.env.PORT || 3000
  const session = require('express-session')
 
+ app.use(express.static('build'))
  app.use(cors())
  app.use(session({ secret: '5a150a5add703325bcffc6c9' }))
  app.use(passport.initialize())
@@ -243,14 +244,14 @@
  })
 
  app.get(route.login, (req, res) => {
-   res.sendFile(path.join(__dirname, 'public', 'login.html'))
+   res.sendFile(path.join(__dirname, 'build', 'login.html'))
  })
 
  app.get('/', function (req, res) {
    if (req.isAuthenticated()) {
-     res.sendFile(path.join(__dirname, 'public', 'index.html'))
+     res.sendFile(path.join(__dirname, 'build', 'index.html'))
    } else {
-     res.sendFile(path.join(__dirname, 'public', 'login.html'))
+     res.sendFile(path.join(__dirname, 'build', 'login.html'))
    }
  })
 
