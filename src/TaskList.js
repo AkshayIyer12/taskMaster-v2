@@ -57,7 +57,7 @@ class TaskList extends Component {
 
   componentDidMount() {
     console.log('component mounted tasklistandform')
-    console.log('id in tasklist', this.props)
+    // console.log('id in tasklist', this.props)
     this.loadData()
   }
 
