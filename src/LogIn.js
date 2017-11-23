@@ -3,10 +3,6 @@ import React, { Component } from 'react'
 
 class LogIn extends Component {
 
-  constructor(props) {
-    super(props)
-    }
-
   componentDidMount() {
     const cookieList = document.cookie.split(';')
     let id = ''
