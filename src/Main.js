@@ -30,7 +30,7 @@ class Main extends Component {
     // const TaskListAndFormWithProps = () => {
     //   console.log('id is', this.state.id)
     //   return (
-    //   <TaskListAndForm userID={this.state.id} />
+    //   <TaskList userID={this.state.id} />
     // )}
 
     return (
@@ -38,8 +38,8 @@ class Main extends Component {
       <Switch>
         <Route exact path='/' component={Home}/>
         <Route path='/LogIn' render={LogInWithProps}/>
-        <Route path='/taskListAndForm' component={TaskList}/>
-        {/* <Route path='/taskListAndForm' render={TaskListAndFormWithProps}/> */}
+        <Route path='/taskList' component={TaskList}/>
+        {/* <Route path='/taskList' render={TaskListAndFormWithProps}/> */}
         <Route path='/task/:taskid' component={TaskDetails}/>
         <Route path='/newtask' component={NewTask}/>
       </Switch>

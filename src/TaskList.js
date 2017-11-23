@@ -39,8 +39,9 @@ class TaskList extends Component {
   }
 
   loadData() {
-    axios.get(`http://localhost:3000/tasks`)
+    axios.get(`http://localhost:3000/userTasks`)
       .then(res => {
+        console.log('user tasks:', res)
         if (res.data.status !== 'success') {
           // handle Error
         } else {
@@ -56,13 +57,13 @@ class TaskList extends Component {
   }
 
   componentDidMount() {
-    console.log('component mounted tasklistandform')
+    console.log('component mounted tasklist')
     // console.log('id in tasklist', this.props)
     this.loadData()
   }
 
   onChange() {
-    console.log('onChange in tasklistandform')
+    console.log('onChange in tasklist')
     this.loadData()
   }
 

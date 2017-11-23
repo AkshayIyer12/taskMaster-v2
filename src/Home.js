@@ -11,7 +11,7 @@ class Home extends Component {
     return (
       <div>
       <h1>home</h1>
-      <Link to='/taskListAndForm'>all tasks</Link>
+      <Link to='/taskList'>all tasks</Link>
       </div>
     )
   }

@@ -11,7 +11,7 @@ class Header extends Component {
           <ul className='nav-bar'>
             <li className="nav-list"><Link to='/'>Home</Link></li>
             {/* <li className="nav-list"><Link to='/logIn'>Log In</Link></li> */}
-            <li className="nav-list"><Link to='/taskListAndForm'>Tasks</Link></li>
+            <li className="nav-list"><Link to='/taskList'>Tasks</Link></li>
             {/* <li className="nav-list"><Link to='/task/:taskid'>Current Task</Link></li> */}
           </ul>
         </nav>
