@@ -15,7 +15,7 @@ class Tasks extends Component {
   render() {
     return (
       <div id='allTasks'>
-        <h2>All tasks</h2>
+        <h2>assigned to you</h2>
         <ul>
           {
             this.props.value.map(current =>
@@ -29,7 +29,7 @@ class Tasks extends Component {
   }
 }
 
-class TasksAssignedTo extends Component {
+class TasksTwo extends Component {
   
   constructor(props) {
     super(props)
@@ -41,7 +41,7 @@ class TasksAssignedTo extends Component {
   render() {
     return (
       <div id='allTasks'>
-        <h2>All tasks</h2>
+        <h2>assigned by you</h2>
         <ul>
           {
             this.props.value.map(current =>
@@ -60,7 +60,8 @@ class TaskList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      taskList: []
+      taskList: [],
+      taskList2: []
     }
   }
 
@@ -77,8 +78,12 @@ class TaskList extends Component {
             return currentTask
           })
 
+          const taskList2 = res.data.data.assignBy.map(currentTask => {
+            return currentTask
+          })
+
           this.setState({
-            taskList
+            taskList, taskList2
           })
         }
       })
@@ -86,7 +91,6 @@ class TaskList extends Component {
 
   componentDidMount() {
     console.log('component mounted tasklist')
-    // console.log('id in tasklist', this.props)
     this.loadData()
   }
 
@@ -105,7 +109,7 @@ class TaskList extends Component {
       <div>
         <AddTaskLink />
         <Tasks value={this.state.taskList} onChange={this.onChange.bind(this)} getDetails={this.getDetails.bind(this)}/>
-        <TasksAssignedTo value={this.state.taskList} onChange={this.onChange.bind(this)} getDetails={this.getDetails.bind(this)}/>
+        <TasksTwo value={this.state.taskList2 } onChange={this.onChange.bind(this)} getDetails={this.getDetails.bind(this)}/>
       </div>
     )
   }
