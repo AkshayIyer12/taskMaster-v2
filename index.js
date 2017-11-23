@@ -64,6 +64,7 @@
  app.post(route.createTask, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
      req.body.type = 'task'
+     req.body.assignBy = req.user.UserId
      db.addTask(req.body, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
