@@ -34,7 +34,8 @@ class NewTask extends Component {
       if(res.data.status !== 'success') {
         // handle error
       } else {
-        const userList = res.data.data.map(currentUser => currentUser.userName)
+        const userList = res.data.data.map(currentUser => currentUser)
+        console.log(userList)
         const state = this.state
         state.userList = userList
         this.setState(state)
@@ -88,7 +89,7 @@ class NewTask extends Component {
         <label>Assign To:<select name='assignTo' value={this.state.assignTo} onChange={this.onChange} selected=''>
           <option value='placeholder'></option>
             {this.state.userList.map(currentUser => 
-              <option key={currentUser} value={currentUser}>{currentUser}</option>
+              <option key={currentUser._id} value={currentUser._id}>{currentUser.userName}</option>
             )}
           </select>
         </label>

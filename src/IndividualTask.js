@@ -24,12 +24,12 @@ class IndividualTask extends Component {
     axios.delete(`http://localhost:3000/task/${this.props.currentTask._id}`, { _id })
     .then((res) => {
       // handle result
+      console.log(res)
       if (res.data.status === 'success') {
         console.log('Task deleted!')
         // re-Render allTasks
         this.props.onChange()
-      }
-      else {
+      } else {
         // handle error
         console.log('Error deleting task!')
       }
@@ -61,7 +61,8 @@ class IndividualTask extends Component {
         <span className='field assign-to' onClick={this.clickTask.bind(this)}>{this.props.currentTask.assignTo}</span>
         <span className='field due-date' onClick={this.clickTask.bind(this)}>{this.props.currentTask.dueDate}</span>
         <span className='field desc' onClick={this.clickTask.bind(this)}>{this.props.currentTask.desc}</span>
-        <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span>
+        <span className='button large material-icons'> <i onClick={this.deleteTask.bind(this)}>delete</i></span>
+        {/* <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span> */}
       </li>
     )
   }

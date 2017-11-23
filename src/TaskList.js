@@ -29,6 +29,32 @@ class Tasks extends Component {
   }
 }
 
+class TasksAssignedTo extends Component {
+  
+  constructor(props) {
+    super(props)
+    this.state = {
+      taskList: []
+    }
+  }
+
+  render() {
+    return (
+      <div id='allTasks'>
+        <h2>All tasks</h2>
+        <ul>
+          {
+            this.props.value.map(current =>
+              <IndividualTask key={current._id} currentTask={current}
+                onChange={this.props.onChange} getDetails={this.props.getDetails} />
+            )
+          }
+        </ul>
+      </div>
+    )
+  }
+}
+
 class TaskList extends Component {
 
   constructor(props) {
@@ -41,11 +67,13 @@ class TaskList extends Component {
   loadData() {
     axios.get(`http://localhost:3000/userTasks`)
       .then(res => {
-        console.log('user tasks:', res)
+        console.log('user tasks:', res.data)
         if (res.data.status !== 'success') {
+          // console.log(res.data.data)
           // handle Error
         } else {
-          const taskList = res.data.data.map(currentTask => {
+          
+          const taskList = res.data.data.assignTo.map(currentTask => {
             return currentTask
           })
 
@@ -77,6 +105,7 @@ class TaskList extends Component {
       <div>
         <AddTaskLink />
         <Tasks value={this.state.taskList} onChange={this.onChange.bind(this)} getDetails={this.getDetails.bind(this)}/>
+        <TasksAssignedTo value={this.state.taskList} onChange={this.onChange.bind(this)} getDetails={this.getDetails.bind(this)}/>
       </div>
     )
   }
