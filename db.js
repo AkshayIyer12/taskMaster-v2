@@ -187,7 +187,11 @@ const getTasksByUserId = (userId, cb) => {
     db.collection('collector').find({
       $or: [{ assignTo: userId }, { assignBy: userId }]
     }).toArray((err, value) => {
+      console.log(value)
       let assignCategory = value.reduce((accum, task) => {
+        if (err !== null) {
+          cb(err || new Error('Cannot find the task for the given id'))
+        }
         if (task === undefined) {
           return accum
         }
@@ -201,6 +205,7 @@ const getTasksByUserId = (userId, cb) => {
         assignTo: [],
         assignBy: []
       })
+      console.log(assignCategory)
       cb(null, assignCategory)
     })
   } else {

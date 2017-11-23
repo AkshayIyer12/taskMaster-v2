@@ -211,6 +211,7 @@
        if (err) {
          res.json({'status': 'error', 'message': err.message})
        } else {
+         console.log('Index ',value)
          res.json({
            'status': 'success',
            'data': value
