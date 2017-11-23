@@ -118,18 +118,18 @@
    })
  })
 
- app.get(route.user, (req, res) => {
-   if (checkReqUser(req.user)) {
-     db.getUserById(req.user.UserId, (err, value) => {
-       if (err) {
-         res.json({ 'status': 'error', 'message': err.message })
-       } else {
-         res.json({
-           'status': 'success',
-           'data': value
-         })
-       }
-     })
+ app.get(route.getUser, (req, res) => {
+   if (req.param.userId) {
+    db.getUserById(req.param.userId, (err, value) => {
+      if (err) {
+        res.json({ 'status': 'error', 'message': err.message })
+      } else {
+        res.json({
+          'status': 'success',
+          'data': value
+        })
+      }
+    })
    } else {
      res.redirect('/login')
    }
