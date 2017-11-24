@@ -42,6 +42,7 @@ class Main extends Component {
         {/* <Route path='/taskList' render={TaskListAndFormWithProps}/> */}
         <Route path='/task/:taskid' component={TaskDetails}/>
         <Route path='/newtask' component={NewTask}/>
+        <Route path='/logout'/>
       </Switch>
       // </main>
     )

@@ -74,17 +74,15 @@ class TaskList extends Component {
           // handle Error
         } else {
           
-          const taskList = res.data.data.assignTo.map(currentTask => {
-            return currentTask
-          })
-
-          const taskList2 = res.data.data.assignBy.map(currentTask => {
-            return currentTask
-          })
+          const taskList = res.data.data.assignTo.map(currentTask => currentTask)
+          const taskList2 = res.data.data.assignBy.map(currentTask => currentTask)
 
           this.setState({
             taskList, taskList2
           })
+          // console.log('1', this.state.taskList)
+          // console.log('2', taskList2)
+          // console.log('2', this.state.taskList2)
         }
       })
   }
