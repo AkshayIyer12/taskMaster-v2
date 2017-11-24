@@ -1,5 +1,4 @@
  const express = require('express')
- const cors = require('cors')
  const app = express()
  const path = require('path')
  const passport = require('passport')
@@ -11,7 +10,6 @@
  const session = require('express-session')
 
  app.use(express.static('build'))
- app.use(cors())
  app.use(session({ secret: '5a150a5add703325bcffc6c9' }))
  app.use(passport.initialize())
  app.use(passport.session())
