@@ -50,7 +50,8 @@ class TaskList extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.addNewTask.bind(this)} className='logout-button'>Add Task</button>
+        <div className='add-task'>
+        <button onClick={this.addNewTask.bind(this)} className='logout-button'>Add Task</button></div>
         <TasksForYou value={this.state.taskList} onChange={this.onChange.bind(this)} getDetails={this.getDetails.bind(this)}/>
         <TasksByYou value={this.state.taskList2 } onChange={this.onChange.bind(this)} getDetails={this.getDetails.bind(this)}/>
       </div>

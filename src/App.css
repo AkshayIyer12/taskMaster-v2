@@ -2,6 +2,14 @@ body {
   font-family: Helvetica;
 }
 
+h2 {
+  text-align: center;
+}
+
+.add-task {
+  text-align: center;
+}
+
 .task-list {
   list-style: none;
   margin: auto;
