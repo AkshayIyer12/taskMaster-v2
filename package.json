@@ -27,7 +27,6 @@
   "dependencies": {
     "axios": "^0.17.1",
     "bulma": "^0.6.1",
-    "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "material-ui": "^0.19.4",
