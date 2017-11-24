@@ -37,10 +37,9 @@
 * standardjs
 * mongodb
 * axios
-* cookie-parser
-* cookie-session
 * passport
 * passport-google-oauth
+* express-session
 
 ### How to file an issue, if you feel something is wrong ?
 * Go to the [issues](https://github.com/anirudhbs/taskMaster-v2/issues) section of this project.

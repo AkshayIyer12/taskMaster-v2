@@ -65,6 +65,7 @@
    if (Object.keys(req.body).length !== 0) {
      req.body.type = 'task'
      req.body.assignBy = req.user.UserId
+     req.body.assignByName = req.user.userName
      db.addTask(req.body, (err, value) => {
        if (err) {
          res.json({'status': 'error', 'message': err.message})
@@ -145,6 +146,7 @@
            'status': 'success',
            'data': value
          })
+         res.redirect('/logout')
        }
      })
    } else {
@@ -239,6 +241,7 @@
        res.redirect('/login')
      } else {
        req.session.passport.user.UserId = value
+       req.session.passport.user.userName = user.userName
        res.redirect('/')
      }
    })
