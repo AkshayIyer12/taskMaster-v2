@@ -12,6 +12,7 @@ class IndividualTask extends Component {
         id: this.props.id,
         taskName: this.props.currentTask.taskName,
         assignTo: this.props.currentTask.assignTo,
+        assignToName: this.props.currentTask.assignToName,
         dueDate: this.props.currentTask.dueDate,
         desc: this.props.currentTask.desc
       }
@@ -58,7 +59,7 @@ class IndividualTask extends Component {
     return (
       <li key={this.props.id} className='task-list'>
         <span className='field task-name' onClick={this.clickTask.bind(this)}>{this.state.currentTaskInfo.taskName}</span>
-        <span className='field assign-to' onClick={this.clickTask.bind(this)}>{this.props.currentTask.assignTo}</span>
+        <span className='field assign-to' onClick={this.clickTask.bind(this)}>{this.props.currentTask.assignToName}</span>
         <span className='field due-date' onClick={this.clickTask.bind(this)}>{this.props.currentTask.dueDate}</span>
         <span className='field desc' onClick={this.clickTask.bind(this)}>{this.props.currentTask.desc}</span>
         <span className='button large material-icons'> <i onClick={this.deleteTask.bind(this)}>delete</i></span>

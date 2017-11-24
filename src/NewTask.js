@@ -45,9 +45,23 @@ class NewTask extends Component {
     })
   }
 
+  getUserName () {
+    console.log('in get user name')
+
+    const name = this.state.userList.filter(curObj => {
+      if(curObj._id === this.state.assignTo) return curObj.userName
+    })
+    console.log('name is ', name[0].userName)
+    const state = this.state
+    state.assignToName = name[0].userName
+    this.setState(state)
+    console.log('name in state', this.state.assignToName)
+  }
+
   addTask () {
-    const { taskName, assignTo, dueDate, desc } = this.state
-    axios.post('http://localhost:3000/task', { taskName, assignTo, dueDate, desc })
+    this.getUserName()
+    const { taskName, assignTo, assignToName, dueDate, desc } = this.state
+    axios.post('http://localhost:3000/task', { taskName, assignTo, assignToName, dueDate, desc })
       .then((res) => {
         // handle result
         if (res.data.status === 'success') {
