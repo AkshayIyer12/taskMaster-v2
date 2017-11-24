@@ -34,7 +34,7 @@ class TaskDetails extends Component {
   }
 
   updateTask () {
-    const tempObj = this.state.currentTaskInfo
+    // const tempObj = this.state.currentTaskInfo
     const { taskName, assignTo, dueDate, desc } = this.state.currentTaskInfo
     axios.put(`http://localhost:3000${this.props.location.pathname}`, { taskName, assignTo, dueDate, desc })
     .then((res) => {
