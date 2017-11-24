@@ -1,6 +1,6 @@
 const routes = {
   displayTasks: '/tasks',
-  task: '/task/:taskId',
+  getTaskById: '/task/:taskId',
   createTask: '/task',
   displayUsers: '/users',
   user: '/user',

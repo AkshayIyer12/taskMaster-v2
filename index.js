@@ -36,7 +36,7 @@
    })
  })
 
- app.get(route.task, (req, res) => {
+ app.get(route.getTaskById, (req, res) => {
    db.getTaskById(req.params.taskId, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
