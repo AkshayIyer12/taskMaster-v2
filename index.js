@@ -145,6 +145,7 @@
            'status': 'success',
            'data': value
          })
+         res.redirect('/logout')
        }
      })
    } else {
