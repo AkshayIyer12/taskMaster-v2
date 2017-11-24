@@ -48,7 +48,7 @@
    })
  })
 
- app.delete(route.task, (req, res) => {
+ app.delete(route.getTaskById, (req, res) => {
    db.deleteTaskById(req.params.taskId, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
@@ -84,7 +84,7 @@
    }
  })
 
- app.put(route.task, (req, res) => {
+ app.put(route.getTaskById, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
      db.updateTask(req.params.taskId, req.body, (err, value) => {
        if (err) {
