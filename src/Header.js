@@ -13,7 +13,7 @@ class Header extends Component {
           <ul className='nav-bar'>
             <li className="nav-list"><Link to='/'>Home</Link></li>
             <li>
-              <button onClick={this.logOut}>Log Out
+              <button onClick={this.logOut} className='logout-button'>Log Out
               </button>
             </li>
           </ul>

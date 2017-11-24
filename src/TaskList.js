@@ -20,15 +20,12 @@ class TaskList extends Component {
           console.log('error getting tasks')
           // handle Error
         } else {
-          
           const taskList = res.data.data.assignTo.map(currentTask => currentTask)
           const taskList2 = res.data.data.assignBy.map(currentTask => currentTask)
-
-          this.setState({
-            taskList, taskList2
-          })
+          this.setState({ taskList, taskList2 })
         }
-      })
+      }
+    )
   }
 
   componentDidMount() {
@@ -53,8 +50,7 @@ class TaskList extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.addNewTask.bind(this)}>Add Task</button>
-        {/* <button className="waves-effect waves-light btn-large" onClick={this.addNewTask.bind(this)}>Add Task</button> */}
+        <button onClick={this.addNewTask.bind(this)} className='logout-button'>Add Task</button>
         <TasksForYou value={this.state.taskList} onChange={this.onChange.bind(this)} getDetails={this.getDetails.bind(this)}/>
         <TasksByYou value={this.state.taskList2 } onChange={this.onChange.bind(this)} getDetails={this.getDetails.bind(this)}/>
       </div>
