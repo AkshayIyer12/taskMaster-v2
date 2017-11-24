@@ -48,7 +48,7 @@
    })
  })
 
- app.delete(route.deleteTask, (req, res) => {
+ app.delete(route.task, (req, res) => {
    db.deleteTaskById(req.params.taskId, (err, value) => {
      if (err) {
        res.json({'status': 'error', 'message': err.message})
@@ -83,7 +83,7 @@
    }
  })
 
- app.put(route.updateTask, (req, res) => {
+ app.put(route.task, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
      db.updateTask(req.params.taskId, req.body, (err, value) => {
        if (err) {
@@ -118,24 +118,24 @@
    })
  })
 
- app.get(route.getUser, (req, res) => {
+ app.get(route.getUserById, (req, res) => {
    if (req.param.userId) {
-    db.getUserById(req.param.userId, (err, value) => {
-      if (err) {
-        res.json({ 'status': 'error', 'message': err.message })
-      } else {
-        res.json({
-          'status': 'success',
-          'data': value
-        })
-      }
-    })
+     db.getUserById(req.param.userId, (err, value) => {
+       if (err) {
+         res.json({ 'status': 'error', 'message': err.message })
+       } else {
+         res.json({
+           'status': 'success',
+           'data': value
+         })
+       }
+     })
    } else {
      res.redirect('/login')
    }
  })
 
- app.delete(route.deleteUser, (req, res) => {
+ app.delete(route.user, (req, res) => {
    if (checkReqUser(req.user)) {
      db.deleteUserById(req.user.UserId, (err, value) => {
        if (err) {
@@ -152,7 +152,7 @@
    }
  })
 
- app.post(route.createUser, (req, res) => {
+ app.post(route.user, (req, res) => {
    if (Object.keys(req.body).length !== 0) {
      req.body.type = 'user'
      db.addUser(req.body, (err, value) => {
@@ -173,7 +173,7 @@
    }
  })
 
- app.put(route.updateUser, (req, res) => {
+ app.put(route.user, (req, res) => {
    if (checkReqUser(req.user)) {
      if (Object.keys(req.body).length !== 0) {
        db.updateTask(req.user.UserId, req.body, (err, value) => {
@@ -211,7 +211,6 @@
        if (err) {
          res.json({'status': 'error', 'message': err.message})
        } else {
-         console.log('Index ',value)
          res.json({
            'status': 'success',
            'data': value
