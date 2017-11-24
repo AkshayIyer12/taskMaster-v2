@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { Component } from 'react'
-// import { Link } from 'react-router-dom'
 import './App.css'
 
 class IndividualTask extends Component {
@@ -49,7 +48,6 @@ class IndividualTask extends Component {
   }
   
   clickTask () {
-    // console.log('clicked on task', this.props.currentTask._id)
     this.props.getDetails(this.props.currentTask._id)
   }
 
@@ -61,7 +59,6 @@ class IndividualTask extends Component {
         <span className='field due-date' onClick={this.clickTask.bind(this)}>{this.props.currentTask.dueDate}</span>
         <span className='field desc' onClick={this.clickTask.bind(this)}>{this.props.currentTask.desc}</span>
         <span className='button large material-icons'> <i onClick={this.deleteTask.bind(this)}>delete</i></span>
-        {/* <span><button onClick={this.deleteTask.bind(this)}>Delete</button></span> */}
       </li>
     )
   }
