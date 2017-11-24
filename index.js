@@ -262,7 +262,7 @@
  app.get('/logout', function (req, res) {
    console.log('logging out')
    req.logout()
-   res.redirect('/')
+   res.redirect('/login')
  })
 
  app.listen(PORT, () => {
