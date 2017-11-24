@@ -11,6 +11,7 @@ class TaskDetails extends Component {
       currentTaskInfo: {
         taskName: '',
         assignTo: '',
+        assignToName: '',
         dueDate: '',
         desc: ''
       }
@@ -33,17 +34,15 @@ class TaskDetails extends Component {
   }
 
   updateTask () {
-    console.log('updating current task')
     const tempObj = this.state.currentTaskInfo
     const { taskName, assignTo, dueDate, desc } = this.state.currentTaskInfo
-    console.log('tempobj', tempObj)
     axios.put(`http://localhost:3000${this.props.location.pathname}`, { taskName, assignTo, dueDate, desc })
     .then((res) => {
       if(res.data.status !== 'success') {
         // handle error
-        console.log('fail')
+        console.log('updating current task fail')
       } else {
-        console.log('success')
+        console.log('updating current task success')
         const state = this.state
         state.editModeFlag = false
         this.setState(state)
@@ -70,7 +69,6 @@ class TaskDetails extends Component {
     axios.get(`http://localhost:3000${this.props.location.pathname}`)
     .then((res) => {
       if(res.data.status === 'success'){
-        // console.log('res is', res.data.data)
         const state = this.state
         Object.assign(state.currentTaskInfo, res.data.data)
         this.setState(state)
@@ -108,7 +106,7 @@ class TaskDetails extends Component {
         <div className='details'>
           <h1>current task</h1>
           <div>Name: {this.state.currentTaskInfo.taskName}</div>
-          <div>Assign To: {this.state.currentTaskInfo.assignTo}</div>
+          <div>Assign To: {this.state.currentTaskInfo.assignToName}</div>
           <div>Due Date: {this.state.currentTaskInfo.dueDate}</div>
           <div>Description: {this.state.currentTaskInfo.desc}</div>
           <div>

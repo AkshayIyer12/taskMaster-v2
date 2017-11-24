@@ -20,12 +20,10 @@ class IndividualTask extends Component {
   }
 
   deleteTask() {
-    console.log('Delete current task')
     const { _id } = this.props.currentTask
     axios.delete(`http://localhost:3000/task/${this.props.currentTask._id}`, { _id })
     .then((res) => {
       // handle result
-      console.log(res)
       if (res.data.status === 'success') {
         console.log('Task deleted!')
         // re-Render allTasks

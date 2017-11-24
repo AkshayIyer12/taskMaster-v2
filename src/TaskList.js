@@ -68,7 +68,6 @@ class TaskList extends Component {
   loadData() {
     axios.get(`http://localhost:3000/userTasks`)
       .then(res => {
-        console.log('user tasks:', res.data)
         if (res.data.status !== 'success') {
           console.log('error getting tasks')
           // handle Error
@@ -80,9 +79,6 @@ class TaskList extends Component {
           this.setState({
             taskList, taskList2
           })
-          // console.log('1', this.state.taskList)
-          // console.log('2', taskList2)
-          // console.log('2', this.state.taskList2)
         }
       })
   }

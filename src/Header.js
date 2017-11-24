@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom'
 
 class Header extends Component {
 
-
+  logOut() {
+    window.open('http://localhost:3000/logout', '_self')
+  }
   render () {
     return (
       <header>
@@ -11,9 +13,13 @@ class Header extends Component {
           <ul className='nav-bar'>
             <li className="nav-list"><Link to='/'>Home</Link></li>
             {/* <li className="nav-list"><Link to='/logIn'>Log In</Link></li> */}
-            <li className="nav-list"><Link to='/taskList'>Tasks</Link></li>
+            {/* <li className="nav-list"><Link to='/taskList'>Tasks</Link></li> */}
             {/* <li className="nav-list"><Link to='/task/:taskid'>Current Task</Link></li> */}
-            <li className="nav-list"><Link to='/logout'>Log Out</Link></li>
+            {/* <li className="nav-list"><Link to='/logout'>Log Out</Link></li> */}
+            <li>
+              <button onClick={this.logOut}>Log Out
+              </button>
+            </li>
           </ul>
         </nav>
       </header>
