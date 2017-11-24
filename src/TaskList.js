@@ -1,7 +1,6 @@
 import axios from 'axios'
 import React, { Component } from 'react'
 import IndividualTask from './IndividualTask'
-import { Link } from 'react-router-dom'
 
 class Tasks extends Component {
 
@@ -97,22 +96,19 @@ class TaskList extends Component {
     this.props.history.push(`/task/${id}`)
   }
 
+  addNewTask() {
+    console.log('add new task')
+    console.log(this.props.history.push('/newtask'))
+  }
+
   render() {
-    
     return (
       <div>
-        <AddTaskLink />
+        <button onClick={this.addNewTask.bind(this)}>Add Task</button>
+        {/* <button className="waves-effect waves-light btn-large" onClick={this.addNewTask.bind(this)}>Add Task</button> */}
         <Tasks value={this.state.taskList} onChange={this.onChange.bind(this)} getDetails={this.getDetails.bind(this)}/>
         <TasksTwo value={this.state.taskList2 } onChange={this.onChange.bind(this)} getDetails={this.getDetails.bind(this)}/>
       </div>
-    )
-  }
-}
-
-class AddTaskLink extends Component {
-  render () {
-    return (
-      <Link to='/newtask'>Add Task</Link>
     )
   }
 }
