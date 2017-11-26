@@ -130,7 +130,7 @@
        }
      })
    } else {
-     res.redirect('/login')
+     res.redirect(route.login)
    }
  })
 
@@ -144,11 +144,11 @@
            'status': 'success',
            'data': value
          })
-         res.redirect('/logout')
+         res.redirect(route.logout)
        }
      })
    } else {
-     res.redirect('/login')
+     res.redirect(route.login)
    }
  })
 
@@ -193,7 +193,7 @@
        })
      }
    } else {
-     res.redirect('/login')
+     res.redirect(route.login)
    }
  })
 
@@ -218,7 +218,7 @@
        }
      })
    } else {
-     res.redirect('/login')
+     res.redirect(route.login)
    }
  })
 
@@ -236,7 +236,7 @@
    }
    db.checkAndAddUser(user, (err, value) => {
      if (err) {
-       res.redirect('/login')
+       res.redirect(route.login)
      } else {
        req.session.passport.user.UserId = value
        req.session.passport.user.userName = user.userName
@@ -251,16 +251,16 @@
 
  app.get('/', function (req, res) {
    if (req.isAuthenticated()) {
-     res.sendFile(path.join(__dirname, 'build', 'index.html'))
-   } else {
-     res.sendFile(path.join(__dirname, 'build', 'login.html'))
-   }
+    res.sendFile(path.join(__dirname, 'build', 'index.html'))
+  } else {
+    res.redirect(route.login)
+  }
  })
 
- app.get('/logout', function (req, res) {
+ app.get(route.logout, function (req, res) {
    console.log('logging out')
    req.logout()
-   res.redirect('/login')
+   res.redirect(route.login)
  })
 
  app.listen(PORT, () => {
