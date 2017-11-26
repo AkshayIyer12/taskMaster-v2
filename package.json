@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "standard --fix",
-    "start": "nodemon index.js",
+    "start": "cd lib && nodemon index.js",
     "start-react": "react-scripts start",
     "build-react": "react-scripts build",
     "test-react": "react-scripts test --env=jsdom",
