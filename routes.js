@@ -8,7 +8,8 @@ const routes = {
   displayUserTasks: '/userTasks',
   authGoogle: '/auth/google',
   callbackRoute: '/auth/google/callback',
-  login: '/login'
+  login: '/login',
+  logout: '/logout'
 }
 
 module.exports = routes
